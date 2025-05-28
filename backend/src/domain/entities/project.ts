@@ -32,6 +32,21 @@ export class Project extends Entity<ProjectProps> {
     return this.props.updatedAt
   }
 
+  private touch() {
+    this.props.updatedAt = new Date()
+  }
+
+  set name(name: string) {
+    this.props.name = name
+    this.props.slug = Slug.createFromText(name)
+    this.touch()
+  }
+
+  set description(description: string) {
+    this.props.description = description
+    this.touch()
+  }
+
   static create(
     props: Optional<ProjectProps, 'createdAt' | 'slug'>,
     id?: UniqueEntityId,
