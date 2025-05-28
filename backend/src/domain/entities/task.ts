@@ -9,6 +9,7 @@ enum TaskStatus {
 }
 
 export interface TaskProps {
+  projectId: UniqueEntityId
   name: string
   description: string
   status: TaskStatus
@@ -18,6 +19,10 @@ export interface TaskProps {
 }
 
 export class Task extends Entity<TaskProps> {
+  get projectId() {
+    return this.props.projectId
+  }
+
   get name() {
     return this.props.name
   }
