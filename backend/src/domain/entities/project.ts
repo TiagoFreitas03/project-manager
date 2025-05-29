@@ -8,7 +8,7 @@ export interface ProjectProps {
   description: string
   slug: Slug
   createdAt: Date
-  updatedAt?: Date
+  updatedAt: Date
 }
 
 export class Project extends Entity<ProjectProps> {
@@ -48,7 +48,7 @@ export class Project extends Entity<ProjectProps> {
   }
 
   static create(
-    props: Optional<ProjectProps, 'createdAt' | 'slug'>,
+    props: Optional<ProjectProps, 'createdAt' | 'slug' | 'updatedAt'>,
     id?: UniqueEntityId,
   ) {
     const project = new Project(
@@ -56,6 +56,7 @@ export class Project extends Entity<ProjectProps> {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.name),
         createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? new Date(),
       },
       id,
     )
