@@ -1,12 +1,7 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
-
-enum TaskStatus {
-  TO_DO = 'TO_DO',
-  DOING = 'DOING',
-  DONE = 'DONE',
-}
+import { TaskStatus } from './value-objects/task-status'
 
 export interface TaskProps {
   projectId: UniqueEntityId
