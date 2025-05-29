@@ -1,5 +1,8 @@
 import { Project } from '@/domain/entities/project'
-import { ProjectsRepository } from '@/domain/repositories/projects-repository'
+import {
+  ProjectsRepository,
+  SearchProjectsFilters,
+} from '@/domain/repositories/projects-repository'
 
 export class InMemoryProjectsRepository implements ProjectsRepository {
   public items: Project[] = []
@@ -22,5 +25,27 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
     const itemIndex = this.items.findIndex((item) => item.id === project.id)
 
     this.items[itemIndex] = project
+  }
+
+  async searchMany({ name, orderBy, order, page }: SearchProjectsFilters) {
+    let filteredProjects = this.items
+
+    if (name) {
+      filteredProjects = filteredProjects.filter((project) =>
+        project.name.includes(name),
+      )
+    }
+
+    filteredProjects.sort((x, y) =>
+      x[orderBy] > y[orderBy] ? 1 : y[orderBy] > x[orderBy] ? -1 : 0,
+    )
+
+    if (order === 'desc') {
+      filteredProjects.reverse()
+    }
+
+    filteredProjects = filteredProjects.slice((page - 1) * 20, page * 20)
+
+    return filteredProjects
   }
 }
