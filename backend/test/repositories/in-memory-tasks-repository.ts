@@ -15,4 +15,14 @@ export class InMemoryTasksRepository implements TasksRepository {
 
     return filteredTasks
   }
+
+  async findById(id: string) {
+    const task = this.items.find((item) => item.id.toString() === id)
+
+    if (!task) {
+      return null
+    }
+
+    return task
+  }
 }
