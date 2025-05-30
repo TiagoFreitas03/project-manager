@@ -10,7 +10,7 @@ export interface TaskProps {
   status: TaskStatus
   priority: number
   createdAt: Date
-  updatedAt?: Date
+  updatedAt: Date
 }
 
 export class Task extends Entity<TaskProps> {
@@ -42,11 +42,15 @@ export class Task extends Entity<TaskProps> {
     return this.props.updatedAt
   }
 
-  static create(props: Optional<TaskProps, 'createdAt'>, id?: UniqueEntityId) {
+  static create(
+    props: Optional<TaskProps, 'createdAt' | 'updatedAt'>,
+    id?: UniqueEntityId,
+  ) {
     const task = new Task(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
+        updatedAt: props.updatedAt ?? new Date(),
       },
       id,
     )
