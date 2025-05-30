@@ -7,4 +7,12 @@ export class InMemoryTasksRepository implements TasksRepository {
   async create(task: Task) {
     this.items.push(task)
   }
+
+  async findManyByProjectId(projectId: string) {
+    const filteredTasks = this.items.filter(
+      (item) => item.projectId.toString() === projectId,
+    )
+
+    return filteredTasks
+  }
 }
