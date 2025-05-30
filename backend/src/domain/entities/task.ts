@@ -61,6 +61,11 @@ export class Task extends Entity<TaskProps> {
     this.touch()
   }
 
+  set status(status: TaskStatus) {
+    this.props.status = status
+    this.touch()
+  }
+
   static create(
     props: Optional<TaskProps, 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityId,
