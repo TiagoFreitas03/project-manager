@@ -4,4 +4,5 @@ export interface TasksRepository {
   create(task: Task): Promise<void>
   findManyByProjectId(projectId: string): Promise<Task[]>
   findById(id: string): Promise<Task | null>
+  save(task: Task): Promise<void>
 }
