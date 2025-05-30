@@ -10,6 +10,7 @@ export function makeProject(
     {
       name: faker.lorem.sentence(),
       description: faker.lorem.text(),
+      repositoryUrl: faker.internet.url(),
       ...override,
     },
     id,
