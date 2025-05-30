@@ -15,4 +15,5 @@ export interface ProjectsRepository {
   findById(id: string): Promise<Project | null>
   save(project: Project): Promise<void>
   searchMany(filters: SearchProjectsFilters): Promise<Project[]>
+  findBySlug(slug: string): Promise<Project | null>
 }
