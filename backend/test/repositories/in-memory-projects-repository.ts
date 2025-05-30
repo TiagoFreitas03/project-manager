@@ -48,4 +48,14 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
 
     return filteredProjects
   }
+
+  async findBySlug(slug: string) {
+    const project = this.items.find((item) => item.slug.value === slug)
+
+    if (!project) {
+      return null
+    }
+
+    return project
+  }
 }
