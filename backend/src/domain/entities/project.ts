@@ -9,6 +9,7 @@ export interface ProjectProps {
   slug: Slug
   createdAt: Date
   updatedAt: Date
+  repositoryUrl: string
 }
 
 export class Project extends Entity<ProjectProps> {
@@ -32,6 +33,10 @@ export class Project extends Entity<ProjectProps> {
     return this.props.updatedAt
   }
 
+  get repositoryUrl() {
+    return this.props.repositoryUrl
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }
@@ -48,7 +53,7 @@ export class Project extends Entity<ProjectProps> {
   }
 
   static create(
-    props: Optional<ProjectProps, 'createdAt' | 'slug' | 'updatedAt'>,
+    props: Optional<ProjectProps, 'slug' | 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityId,
   ) {
     const project = new Project(
