@@ -52,6 +52,11 @@ export class Project extends Entity<ProjectProps> {
     this.touch()
   }
 
+  set repositoryUrl(repositoryUrl: string) {
+    this.props.repositoryUrl = repositoryUrl
+    this.touch()
+  }
+
   static create(
     props: Optional<ProjectProps, 'slug' | 'createdAt' | 'updatedAt'>,
     id?: UniqueEntityId,

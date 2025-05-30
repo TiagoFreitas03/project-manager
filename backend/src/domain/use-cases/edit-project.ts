@@ -2,15 +2,18 @@ import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { Project } from '../entities/project'
 import { ProjectsRepository } from '../repositories/projects-repository'
+import { InvalidHttpUrlError } from './errors/invalid-http-url-error'
+import { isValidHttpUrl } from '../utils/is-valid-http-url'
 
 interface EditProjectUseCaseRequest {
   projectId: string
   name: string
   description: string
+  repositoryUrl: string
 }
 
 type EditProjectUseCaseResponse = Either<
-  ResourceNotFoundError,
+  ResourceNotFoundError | InvalidHttpUrlError,
   { project: Project }
 >
 
@@ -21,6 +24,7 @@ export class EditProjectUseCase {
     projectId,
     name,
     description,
+    repositoryUrl,
   }: EditProjectUseCaseRequest): Promise<EditProjectUseCaseResponse> {
     const project = await this.projectsRepository.findById(projectId)
 
@@ -28,8 +32,13 @@ export class EditProjectUseCase {
       return left(new ResourceNotFoundError())
     }
 
+    if (!isValidHttpUrl(repositoryUrl)) {
+      return left(new InvalidHttpUrlError(repositoryUrl))
+    }
+
     project.name = name
     project.description = description
+    project.repositoryUrl = repositoryUrl
 
     await this.projectsRepository.save(project)
 
