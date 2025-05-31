@@ -6,3 +6,6 @@ node_modules/
 
 # Environmente
 .env
+
+# Database
+/prisma/database
