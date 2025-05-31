@@ -1,2 +1,8 @@
 # Dependencies
 node_modules/
+
+# Prisma
+/generated/prisma
+
+# Environmente
+.env
