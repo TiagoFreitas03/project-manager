@@ -12,10 +12,10 @@ model Project {
   id            String   @id @default(uuid())
   name          String
   description   String
-  slug          String
+  repositoryUrl String   @map("repository_url")
+  slug          String   @unique()
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
-  repositoryUrl String   @map("repository_url")
 
   @@map("projects")
 }
