@@ -3,12 +3,12 @@ import {
   ProjectsRepository,
   SearchProjectsFilters,
 } from '@/domain/repositories/projects-repository'
-import { PrismaProjectMapper } from '../mappers/project-mapper'
+import { ProjectMapper } from '../mappers/project-mapper'
 import { prisma } from '../lib/prisma'
 
 export class PrismaProjectsRepository implements ProjectsRepository {
   async create(project: Project) {
-    const data = PrismaProjectMapper.toPrisma(project)
+    const data = ProjectMapper.toPrisma(project)
 
     await prisma.project.create({ data })
   }
@@ -22,11 +22,11 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       return null
     }
 
-    return PrismaProjectMapper.toDomain(project)
+    return ProjectMapper.toDomain(project)
   }
 
   async save(project: Project) {
-    const data = PrismaProjectMapper.toPrisma(project)
+    const data = ProjectMapper.toPrisma(project)
 
     await prisma.project.update({
       data,
@@ -47,7 +47,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       skip: page * 20 - 20,
     })
 
-    return projects.map(PrismaProjectMapper.toDomain)
+    return projects.map(ProjectMapper.toDomain)
   }
 
   async findBySlug(slug: string) {
@@ -59,7 +59,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       return null
     }
 
-    return PrismaProjectMapper.toDomain(project)
+    return ProjectMapper.toDomain(project)
   }
 
   async delete(project: Project) {

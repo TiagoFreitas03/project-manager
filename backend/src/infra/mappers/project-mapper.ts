@@ -3,7 +3,7 @@ import { Project } from '@/domain/entities/project'
 import { Slug } from '@/domain/entities/value-objects/slug'
 import { Prisma, Project as PrismaProject } from 'generated/prisma'
 
-export class PrismaProjectMapper {
+export class ProjectMapper {
   static toDomain(raw: PrismaProject): Project {
     return Project.create(
       {
