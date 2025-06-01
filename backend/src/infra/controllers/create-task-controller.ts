@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { makeCreateTaskUseCase } from '../factories/make-create-task-use-case'
+import { TaskPresenter } from '../presenters/task-presenter'
 
 export async function createTaskController(
   request: FastifyRequest,
@@ -30,5 +31,7 @@ export async function createTaskController(
     throw result.value
   }
 
-  return reply.status(201).send()
+  return reply.status(201).send({
+    task: TaskPresenter.toHTTP(result.value.task),
+  })
 }
