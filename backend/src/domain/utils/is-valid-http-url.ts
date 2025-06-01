@@ -7,7 +7,5 @@ export function isValidHttpUrl(str: string) {
     return false
   }
 
-  console.log(url.hostname)
-
   return url.protocol === 'http:' || url.protocol === 'https:'
 }
