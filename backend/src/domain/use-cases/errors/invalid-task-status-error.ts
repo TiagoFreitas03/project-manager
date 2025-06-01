@@ -1,7 +1,8 @@
-import { UseCaseError } from '@/core/errors/use-case-error'
+import { BadRequestError } from '@/core/errors/bad-request-error'
 
-export class InvalidTaskStatusError extends Error implements UseCaseError {
+export class InvalidTaskStatusError extends BadRequestError {
   constructor(status: string) {
-    super(`${status} is not a valid status`)
+    super()
+    this.message = `"${status}" is not a valid status`
   }
 }

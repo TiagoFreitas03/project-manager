@@ -1,7 +1,8 @@
-import { UseCaseError } from '@/core/errors/use-case-error'
+import { BadRequestError } from '@/core/errors/bad-request-error'
 
-export class InvalidPriorityError extends Error implements UseCaseError {
+export class InvalidPriorityError extends BadRequestError {
   constructor() {
-    super('Invalid priority (must be between 1 and 3).')
+    super()
+    this.message = 'Invalid priority (must be between 1 and 3).'
   }
 }

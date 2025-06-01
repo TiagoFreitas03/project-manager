@@ -1,7 +1,8 @@
-import { UseCaseError } from '@/core/errors/use-case-error'
+import { BadRequestError } from '@/core/errors/bad-request-error'
 
-export class InvalidHttpUrlError extends Error implements UseCaseError {
+export class InvalidHttpUrlError extends BadRequestError {
   constructor(url: string) {
-    super(`${url} is not a valid HTTP URL`)
+    super()
+    this.message = `"${url}" is not a valid HTTP URL`
   }
 }
