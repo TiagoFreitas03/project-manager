@@ -42,7 +42,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
         name: { contains: name },
       },
       orderBy: {
-        [orderBy]: [order],
+        [orderBy]: order,
       },
       skip: page * 20 - 20,
     })
