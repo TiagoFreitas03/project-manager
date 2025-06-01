@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { makeEditProjectUseCase } from '../factories/make-edit-project-use-case'
+import { ProjectPresenter } from '../presenters/project-presenter'
 
 export async function editProjectController(
   request: FastifyRequest,
@@ -35,5 +36,7 @@ export async function editProjectController(
     throw result.value
   }
 
-  return reply.status(204).send()
+  return reply.status(204).send({
+    project: ProjectPresenter.toHTTP(result.value.project),
+  })
 }
