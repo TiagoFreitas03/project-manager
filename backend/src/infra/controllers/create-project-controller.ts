@@ -18,7 +18,15 @@ export async function createProjectController(
 
   const createProjectUseCase = makeCreateProjectUseCase()
 
-  await createProjectUseCase.execute({ name, description, repositoryUrl })
+  const result = await createProjectUseCase.execute({
+    name,
+    description,
+    repositoryUrl,
+  })
+
+  if (result.isLeft()) {
+    throw result.value
+  }
 
   return reply.status(201).send()
 }
