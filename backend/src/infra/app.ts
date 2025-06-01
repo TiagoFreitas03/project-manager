@@ -3,10 +3,12 @@ import { ZodError } from 'zod'
 import { projectRoutes } from './routes/project-routes'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { BadRequestError } from '@/core/errors/bad-request-error'
+import { taskRoutes } from './routes/task-routes'
 
 export const app = fastify()
 
 app.register(projectRoutes)
+app.register(taskRoutes)
 
 app.setErrorHandler((error, request, reply) => {
   if (error instanceof ZodError) {
