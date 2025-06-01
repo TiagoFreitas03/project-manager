@@ -36,7 +36,7 @@ export async function editProjectController(
     throw result.value
   }
 
-  return reply.status(204).send({
+  return reply.status(200).send({
     project: ProjectPresenter.toHTTP(result.value.project),
   })
 }
