@@ -21,7 +21,17 @@ export async function fetchProjectTasksController(
     throw result.value
   }
 
+  const { tasks } = result.value
+
   return reply.status(200).send({
-    tasks: result.value.tasks.map(TaskPresenter.toHTTP),
+    toDoTasks: tasks
+      .filter((task) => task.status === 'TO_DO')
+      .map(TaskPresenter.toHTTP),
+    doingTasks: tasks
+      .filter((task) => task.status === 'DOING')
+      .map(TaskPresenter.toHTTP),
+    doneTasks: tasks
+      .filter((task) => task.status === 'DONE')
+      .map(TaskPresenter.toHTTP),
   })
 }
