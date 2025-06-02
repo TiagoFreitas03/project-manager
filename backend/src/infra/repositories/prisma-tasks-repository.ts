@@ -13,7 +13,7 @@ export class PrismaTasksRepository implements TasksRepository {
   async findManyByProjectId(projectId: string) {
     const tasks = await prisma.task.findMany({
       where: { projectId },
-      orderBy: [{ priority: 'asc' }, { createdAt: 'desc' }],
+      orderBy: [{ priority: 'asc' }, { updatedAt: 'desc' }],
     })
 
     return tasks.map(TaskMapper.toDomain)
