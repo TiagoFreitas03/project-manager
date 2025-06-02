@@ -4,6 +4,7 @@ import { fetchProjectTasksController } from '../controllers/fetch-project-tasks-
 import { getTaskByIdController } from '../controllers/get-task-by-id-controller'
 import { editTaskController } from '../controllers/edit-task-controller'
 import { updateTaskStatusController } from '../controllers/update-task-status-controller'
+import { deleteTaskController } from '../controllers/delete-task-controller'
 
 export async function taskRoutes(app: FastifyInstance) {
   app.post('/tasks', createTaskController)
@@ -11,4 +12,5 @@ export async function taskRoutes(app: FastifyInstance) {
   app.get('/tasks/:taskId', getTaskByIdController)
   app.put('/tasks/:taskId', editTaskController)
   app.patch('/tasks/:taskId/status', updateTaskStatusController)
+  app.delete('/tasks/:taskId', deleteTaskController)
 }
