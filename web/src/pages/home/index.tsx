@@ -9,7 +9,7 @@ import { Pagination } from '@/components/pagination'
 
 setDefaultOptions({ locale: ptBR })
 
-const projects = Array.from({ length: 8 }).map((_, index) => {
+const projects = Array.from({ length: 12 }).map((_, index) => {
   const progress = index === 0 ? 0 : ((index % 5) + 1) * 20
   const status = progress === 0 ? 'todo' : progress === 100 ? 'done' : 'doing'
 
@@ -31,10 +31,10 @@ export function Home() {
 
         <FiltersForm />
 
-        <div className="my-4 grid grid-cols-2 gap-3">
+        <div className="my-4 grid grid-cols-3 gap-3">
           {projects.map((project) => {
             return (
-              <div key={project.id} className="bg-neutral-800 p-3 rounded-md">
+              <div key={project.id} className="bg-neutral-800 p-3 rounded">
                 <h2 className="font-semibold mb-2">{project.name}</h2>
 
                 <span className="flex text-xs gap-2 items-center mb-2">
