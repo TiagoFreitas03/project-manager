@@ -1,5 +1,5 @@
+import { Home } from './pages/home'
+
 export function App() {
-  return (
-    <h1>project manager</h1>
-  )
+  return <Home />
 }
