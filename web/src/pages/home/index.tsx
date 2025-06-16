@@ -6,6 +6,7 @@ import { Progress } from '../../components/ui/progress'
 import { Header } from './header'
 import { FiltersForm } from './filters-form'
 import { Pagination } from '@/components/pagination'
+import { useState } from 'react'
 
 setDefaultOptions({ locale: ptBR })
 
@@ -24,6 +25,8 @@ const projects = Array.from({ length: 12 }).map((_, index) => {
 })
 
 export function Home() {
+  const [page, setPage] = useState(1)
+
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <div className="max-w-7xl w-full max-h-[48rem] h-full border-2 rounded m-4 bg-neutral-900 p-4">
@@ -54,7 +57,7 @@ export function Home() {
         </div>
 
         <div className="flex justify-between items-center">
-          <Pagination pages={3} currentPage={1} />
+          <Pagination pages={3} currentPage={page} onPageChange={setPage} />
         </div>
       </div>
     </div>
