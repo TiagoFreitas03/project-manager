@@ -32,7 +32,7 @@ model Task {
   id          String     @id @default(uuid())
   name        String
   description String
-  status      TaskStatus
+  status      TaskStatus @default(TO_DO)
   priority    Int
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @updatedAt @map("updated_at")
