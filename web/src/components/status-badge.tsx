@@ -2,16 +2,17 @@ import clsx from 'clsx'
 
 interface StatusBadgeProps {
   status: string
+  size?: 'xs' | 'sm'
 }
 
-export function StatusBadge({ status }: StatusBadgeProps) {
+export function StatusBadge({ status, size = 'xs' }: StatusBadgeProps) {
   function formatStatus() {
     if (status === 'todo') {
-      return 'Não iniciado'
+      return 'Pendente'
     }
 
     if (status === 'doing') {
-      return 'Em progresso'
+      return 'Em andamento'
     }
 
     return 'Finalizado'
@@ -19,10 +20,12 @@ export function StatusBadge({ status }: StatusBadgeProps) {
 
   return (
     <span
-      className={clsx('text-xs text-neutral-100 rounded-lg px-2 py-1', {
+      className={clsx('text-neutral-100 rounded-lg px-2 py-1', {
         'bg-zinc-700/50': status === 'todo',
         'bg-orange-600/50': status === 'doing',
         'bg-pink-600/50': status === 'done',
+        'text-xs': size === 'xs',
+        'text-sm': size === 'sm',
       })}
     >
       &#9679; {formatStatus()}
