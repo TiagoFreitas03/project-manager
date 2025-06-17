@@ -1,5 +1,6 @@
-import { Button } from '@/components/ui/button'
-import { Edit, FileText, Plus } from 'lucide-react'
+import { FileText } from 'lucide-react'
+import { EditProjectDialog } from './edit-project-dialog'
+import { CreateTaskDialog } from './create-task-dialog'
 
 export function Header() {
   return (
@@ -9,13 +10,13 @@ export function Header() {
       </span>
 
       <div className="flex gap-2">
-        <Button>
-          <Plus /> Nova Tarefa
-        </Button>
+        <CreateTaskDialog projectId="1" />
 
-        <Button>
-          <Edit /> Editar Projeto
-        </Button>
+        <EditProjectDialog
+          id="1"
+          description="Descricao"
+          repositoryUrl="http://www.github.com/user/example.git"
+        />
       </div>
     </header>
   )
