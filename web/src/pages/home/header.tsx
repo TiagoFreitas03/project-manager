@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
-import { Layers, Plus } from 'lucide-react'
+import { Layers } from 'lucide-react'
+import { CreateProjectDialog } from './create-project-dialog'
 
 export function Header() {
   return (
@@ -8,9 +8,7 @@ export function Header() {
         <Layers color="white" /> Projetos
       </span>
 
-      <Button>
-        <Plus /> Novo
-      </Button>
+      <CreateProjectDialog />
     </header>
   )
 }
