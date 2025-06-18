@@ -1,6 +1,7 @@
 import { FileText } from 'lucide-react'
 import { EditProjectDialog } from './edit-project-dialog'
 import { CreateTaskDialog } from './create-task-dialog'
+import { DeleteProjectDialog } from './delete-project-dialog'
 
 export function Header() {
   return (
@@ -17,6 +18,8 @@ export function Header() {
           description="Descricao"
           repositoryUrl="http://www.github.com/user/example.git"
         />
+
+        <DeleteProjectDialog id="1" />
       </div>
     </header>
   )
