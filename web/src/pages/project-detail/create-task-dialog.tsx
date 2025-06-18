@@ -35,8 +35,8 @@ export function CreateTaskDialog({ projectId }: CreateTaskDialogProps) {
     <Dialog>
       <form onSubmit={handleCreateTask}>
         <DialogTrigger asChild>
-          <Button>
-            <Plus /> Nova Tarefa
+          <Button title="Nova tarefa">
+            <Plus />
           </Button>
         </DialogTrigger>
 

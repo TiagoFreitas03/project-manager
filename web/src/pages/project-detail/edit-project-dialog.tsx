@@ -33,8 +33,8 @@ export function EditProjectDialog({ id, ...props }: EditProjectDialogProps) {
     <Dialog>
       <form onSubmit={handleEditProject}>
         <DialogTrigger asChild>
-          <Button>
-            <Edit /> Editar Projeto
+          <Button title="Editar Projeto">
+            <Edit />
           </Button>
         </DialogTrigger>
 
