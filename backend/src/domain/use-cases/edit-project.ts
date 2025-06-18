@@ -7,7 +7,6 @@ import { isValidHttpUrl } from '../utils/is-valid-http-url'
 
 interface EditProjectUseCaseRequest {
   projectId: string
-  name: string
   description: string
   repositoryUrl: string
 }
@@ -22,7 +21,6 @@ export class EditProjectUseCase {
 
   async execute({
     projectId,
-    name,
     description,
     repositoryUrl,
   }: EditProjectUseCaseRequest): Promise<EditProjectUseCaseResponse> {
@@ -36,7 +34,6 @@ export class EditProjectUseCase {
       return left(new InvalidHttpUrlError(repositoryUrl))
     }
 
-    project.name = name
     project.description = description
     project.repositoryUrl = repositoryUrl
 

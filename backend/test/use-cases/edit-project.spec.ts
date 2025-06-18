@@ -21,21 +21,19 @@ describe('Edit Project', () => {
 
     await sut.execute({
       projectId: newProject.id.toString(),
-      name: 'Edited Project Name',
       description: 'Edited Project Description',
       repositoryUrl: 'https://www.github.com/username/project',
     })
 
     expect(projectsRepository.items[0]).toMatchObject({
-      name: 'Edited Project Name',
       description: 'Edited Project Description',
+      repositoryUrl: 'https://www.github.com/username/project',
     })
   })
 
   it('should not be able to edit an inexistent project', async () => {
     const result = await sut.execute({
       projectId: 'inexistent-project-id',
-      name: 'Name',
       description: 'Description',
       repositoryUrl: 'https://www.github.com/username/project',
     })
@@ -51,7 +49,6 @@ describe('Edit Project', () => {
 
     const result = await sut.execute({
       projectId: newProject.id.toString(),
-      name: 'Edited Project Name',
       description: 'Edited Project Description',
       repositoryUrl: 'invalid-url',
     })

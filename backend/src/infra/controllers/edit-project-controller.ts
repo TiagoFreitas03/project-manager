@@ -12,14 +12,13 @@ export async function editProjectController(
   })
 
   const editProjectBodySchema = z.object({
-    name: z.string(),
     description: z.string(),
     repositoryUrl: z.string().url(),
   })
 
   const { projectId } = editProjectParamsSchema.parse(request.params)
 
-  const { name, description, repositoryUrl } = editProjectBodySchema.parse(
+  const { description, repositoryUrl } = editProjectBodySchema.parse(
     request.body,
   )
 
@@ -27,7 +26,6 @@ export async function editProjectController(
 
   const result = await editProjectUseCase.execute({
     projectId,
-    name,
     description,
     repositoryUrl,
   })
