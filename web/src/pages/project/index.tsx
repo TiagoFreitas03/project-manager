@@ -17,7 +17,7 @@ const todoTasks = tasks.filter((task) => task.status === 'todo')
 const doingTasks = tasks.filter((task) => task.status === 'doing')
 const doneTasks = tasks.filter((task) => task.status === 'done')
 
-export function ProjectDetail() {
+export function Project() {
   return (
     <>
       <Header />
