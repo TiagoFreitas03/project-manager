@@ -5,6 +5,7 @@ const statuses = ['todo', 'doing', 'done']
 
 const tasks = Array.from({ length: 21 }).map((_, index) => {
   return {
+    id: index.toString(),
     name: `Task ${index + 1}`,
     status: statuses[index % 3],
     priority: (index % 3) + 1,
