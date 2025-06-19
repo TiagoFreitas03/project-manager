@@ -1,6 +1,5 @@
 import { MoveRight } from 'lucide-react'
-import { format, setDefaultOptions } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { format } from 'date-fns'
 import { StatusBadge } from '@/components/status-badge'
 import { Progress } from '@/components/ui/progress'
 import { Header } from './header'
@@ -8,8 +7,6 @@ import { FiltersForm } from './filters-form'
 import { Pagination } from '@/components/pagination'
 import { useState } from 'react'
 import { Link } from 'react-router'
-
-setDefaultOptions({ locale: ptBR })
 
 const projects = Array.from({ length: 12 }).map((_, index) => {
   const progress = index === 0 ? 0 : ((index % 5) + 1) * 20

@@ -10,11 +10,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Info } from 'lucide-react'
-import { format, setDefaultOptions } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { format } from 'date-fns'
 import { KeyValueText } from './key-value-text'
-
-setDefaultOptions({ locale: ptBR })
 
 interface ProjectDetailsDialogProps {
   name: string
