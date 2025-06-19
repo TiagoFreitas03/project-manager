@@ -10,9 +10,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Info } from 'lucide-react'
-import { DetailField } from './detail-field'
 import { format, setDefaultOptions } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { KeyValueText } from './key-value-text'
 
 setDefaultOptions({ locale: ptBR })
 
@@ -41,11 +41,11 @@ export function ProjectDetailsDialog(data: ProjectDetailsDialogProps) {
         </DialogHeader>
 
         <div className="flex flex-col gap-2">
-          <DetailField title="Nome">{data.name}</DetailField>
+          <KeyValueText keyName="Nome">{data.name}</KeyValueText>
 
-          <DetailField title="Descrição">{data.description}</DetailField>
+          <KeyValueText keyName="Descrição">{data.description}</KeyValueText>
 
-          <DetailField title="Link Repositório">
+          <KeyValueText keyName="Link Repositório">
             <a
               href={data.repositoryUrl}
               className="text-orange-600"
@@ -54,15 +54,15 @@ export function ProjectDetailsDialog(data: ProjectDetailsDialogProps) {
             >
               {data.repositoryUrl}
             </a>
-          </DetailField>
+          </KeyValueText>
 
-          <DetailField title="Criado Em">
+          <KeyValueText keyName="Criado Em">
             {format(data.createdAt.toDateString(), 'dd MMM yyyy')}
-          </DetailField>
+          </KeyValueText>
 
-          <DetailField title="Última Alteração">
+          <KeyValueText keyName="Última Alteração">
             {format(data.updatedAt.toDateString(), 'dd MMM yyyy')}
-          </DetailField>
+          </KeyValueText>
         </div>
 
         <DialogFooter>
