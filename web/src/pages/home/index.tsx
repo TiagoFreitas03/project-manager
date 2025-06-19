@@ -7,21 +7,24 @@ import { FiltersForm } from './filters-form'
 import { Pagination } from '@/components/pagination'
 import { useState } from 'react'
 import { Link } from 'react-router'
+import type { ProjectSummary } from '@/interfaces/project-summary'
 
-const projects = Array.from({ length: 12 }).map((_, index) => {
-  const progress = index === 0 ? 0 : ((index % 5) + 1) * 20
-  const status = progress === 0 ? 'todo' : progress === 100 ? 'done' : 'doing'
+const projects: ProjectSummary[] = Array.from({ length: 12 }).map(
+  (_, index) => {
+    const progress = index === 0 ? 0 : ((index % 5) + 1) * 20
+    const status = progress === 0 ? 'TO_DO' : progress < 100 ? 'DOING' : 'DONE'
 
-  return {
-    id: index,
-    name: `Project ${index + 1}`,
-    createdAt: new Date(2023, index, 1),
-    updatedAt: new Date(2024, index, 1),
-    status,
-    slug: `project-${index + 1}`,
-    progress,
-  }
-})
+    return {
+      id: `${index}`,
+      name: `Project ${index + 1}`,
+      createdAt: new Date(2023, index, 1),
+      updatedAt: new Date(2024, index, 1),
+      status,
+      slug: `project-${index + 1}`,
+      progress,
+    }
+  },
+)
 
 export function Home() {
   const [page, setPage] = useState(1)
@@ -48,7 +51,7 @@ export function Home() {
                 {format(project.updatedAt, 'dd MMM yyyy')}
               </span>
 
-              <StatusBadge status={project.status} />
+              <StatusBadge value={project.status} />
 
               <span className="flex gap-1 items-center text-xs mt-2 w-36">
                 {project.progress}% <Progress value={project.progress} />
