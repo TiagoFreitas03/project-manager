@@ -1,12 +1,9 @@
-import { MoveRight } from 'lucide-react'
-import { format } from 'date-fns'
-import { StatusBadge } from '@/components/status-badge'
-import { Progress } from '@/components/ui/progress'
-import { Header } from './header'
-import { FiltersForm } from './filters-form'
-import { Pagination } from '@/components/pagination'
 import { useState } from 'react'
-import { Link } from 'react-router'
+
+import { FiltersForm } from './filters-form'
+import { Header } from './header'
+import { ProjectCard } from './project-card'
+import { Pagination } from '@/components/pagination'
 import type { ProjectSummary } from '@/interfaces/project-summary'
 
 const projects: ProjectSummary[] = Array.from({ length: 12 }).map(
@@ -37,27 +34,7 @@ export function Home() {
 
       <div className="my-4 grid grid-cols-3 gap-3">
         {projects.map((project) => {
-          return (
-            <Link
-              key={project.id}
-              className="bg-neutral-800 p-3 rounded"
-              to={`/project/${project.slug}`}
-            >
-              <h2 className="font-semibold mb-2">{project.name}</h2>
-
-              <span className="flex text-xs gap-2 items-center mb-2">
-                {format(project.createdAt, 'dd MMM yyyy')}{' '}
-                <MoveRight size={14} />{' '}
-                {format(project.updatedAt, 'dd MMM yyyy')}
-              </span>
-
-              <StatusBadge value={project.status} />
-
-              <span className="flex gap-1 items-center text-xs mt-2 w-36">
-                {project.progress}% <Progress value={project.progress} />
-              </span>
-            </Link>
-          )
+          return <ProjectCard key={project.id} data={project} />
         })}
       </div>
 
