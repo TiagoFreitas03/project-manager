@@ -3,12 +3,12 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { DialogDescription } from '@radix-ui/react-dialog'
 import { Info } from 'lucide-react'
 import { DetailField } from './detail-field'
 import { format, setDefaultOptions } from 'date-fns'
