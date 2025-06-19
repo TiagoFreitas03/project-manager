@@ -1,4 +1,5 @@
 import { Router } from './router'
+import './lib/date-fns'
 
 export function App() {
   return (
