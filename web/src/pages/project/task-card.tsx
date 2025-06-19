@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 import { MoveRight } from 'lucide-react'
-import { TaskDropdownMenu } from './task-dropdown-menu'
 
 export interface Task {
   id: string
@@ -22,8 +21,6 @@ export function TaskCard({ task }: TaskCardProps) {
     <div className="bg-neutral-800 my-3 p-4 rounded">
       <div className="flex justify-between items-start">
         <h2>{task.name}</h2>
-
-        <TaskDropdownMenu />
       </div>
 
       <span className="text-sm">
