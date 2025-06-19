@@ -1,5 +1,6 @@
-import type { Status } from '@/types/status'
 import clsx from 'clsx'
+
+import type { Status } from '@/types/status'
 
 interface StatusBadgeProps {
   value: Status

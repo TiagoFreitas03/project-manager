@@ -1,7 +1,8 @@
 import { KanbanSquare } from 'lucide-react'
-import { EditProjectDialog } from './edit-project-dialog'
+
 import { CreateTaskDialog } from './create-task-dialog'
 import { DeleteProjectDialog } from './delete-project-dialog'
+import { EditProjectDialog } from './edit-project-dialog'
 import { ProjectDetailsDialog } from './project-details-dialog'
 
 export function Header() {

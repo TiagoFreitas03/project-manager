@@ -1,3 +1,6 @@
+import { Search } from 'lucide-react'
+import type { FormEvent } from 'react'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -7,8 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Search } from 'lucide-react'
-import type { FormEvent } from 'react'
 
 export function FiltersForm() {
   function handleFilterProjects(event: FormEvent) {

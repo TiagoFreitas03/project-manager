@@ -1,5 +1,5 @@
-import { Router } from './router'
 import './lib/date-fns'
+import { Router } from './router'
 
 export function App() {
   return (

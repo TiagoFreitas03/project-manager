@@ -1,3 +1,6 @@
+import { format } from 'date-fns'
+import { Info } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -9,8 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Info } from 'lucide-react'
-import { format } from 'date-fns'
 import { KeyValueText } from '@/components/key-value-text'
 
 interface ProjectDetailsDialogProps {

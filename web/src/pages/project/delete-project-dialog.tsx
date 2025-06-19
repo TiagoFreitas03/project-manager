@@ -1,3 +1,5 @@
+import { Trash } from 'lucide-react'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +12,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { Trash } from 'lucide-react'
 
 interface DeleteProjectDialogProps {
   id: string

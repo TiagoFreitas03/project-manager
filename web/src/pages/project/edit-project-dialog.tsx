@@ -1,3 +1,6 @@
+import { Edit } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
+
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -11,8 +14,6 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Edit } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
 
 interface EditProjectDialogProps {
   id: string

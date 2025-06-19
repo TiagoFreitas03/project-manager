@@ -1,3 +1,6 @@
+import { Plus } from 'lucide-react'
+import type { FormEvent } from 'react'
+
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -18,8 +21,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { Plus } from 'lucide-react'
-import type { FormEvent } from 'react'
 
 interface CreateTaskDialogProps {
   projectId: string
