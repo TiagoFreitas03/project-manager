@@ -33,7 +33,7 @@ export function CreateProjectDialog() {
             <DialogTitle>Novo Projeto</DialogTitle>
 
             <DialogDescription>
-              Preencha os campos abaixo para criar um projeto.
+              Preencha os campos abaixo para criar um novo projeto.
             </DialogDescription>
           </DialogHeader>
 
