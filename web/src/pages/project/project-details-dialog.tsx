@@ -12,17 +12,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { KeyValueText } from '@/components/key-value-text'
+import { KeyValue } from '@/components/key-value'
+import type { Project } from '@/interfaces/project'
 
 interface ProjectDetailsDialogProps {
-  name: string
-  description: string
-  repositoryUrl: string
-  createdAt: Date
-  updatedAt: Date
+  data: Project
 }
 
-export function ProjectDetailsDialog(data: ProjectDetailsDialogProps) {
+export function ProjectDetailsDialog({ data }: ProjectDetailsDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -39,11 +36,11 @@ export function ProjectDetailsDialog(data: ProjectDetailsDialogProps) {
         </DialogHeader>
 
         <div className="flex flex-col gap-2">
-          <KeyValueText keyName="Nome">{data.name}</KeyValueText>
+          <KeyValue keyName="Nome">{data.name}</KeyValue>
 
-          <KeyValueText keyName="Descrição">{data.description}</KeyValueText>
+          <KeyValue keyName="Descrição">{data.description}</KeyValue>
 
-          <KeyValueText keyName="Link Repositório">
+          <KeyValue keyName="Link Repositório">
             <a
               href={data.repositoryUrl}
               className="text-orange-600"
@@ -52,15 +49,15 @@ export function ProjectDetailsDialog(data: ProjectDetailsDialogProps) {
             >
               {data.repositoryUrl}
             </a>
-          </KeyValueText>
+          </KeyValue>
 
-          <KeyValueText keyName="Criado Em">
+          <KeyValue keyName="Criado Em">
             {format(data.createdAt.toDateString(), 'dd MMM yyyy')}
-          </KeyValueText>
+          </KeyValue>
 
-          <KeyValueText keyName="Última Alteração">
+          <KeyValue keyName="Última Alteração">
             {format(data.updatedAt.toDateString(), 'dd MMM yyyy')}
-          </KeyValueText>
+          </KeyValue>
         </div>
 
         <DialogFooter>

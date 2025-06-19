@@ -1,36 +1,25 @@
-import { format } from 'date-fns'
-import { MoveRight } from 'lucide-react'
-
-export interface Task {
-  id: string
-  name: string
-  status: string
-  priority: number
-  createdAt: Date
-  updatedAt: Date
-}
+import { DateInterval } from '@/components/date-interval'
+import { PriorityBadge } from '@/components/priority-badge'
+import type { Task } from '@/interfaces/task'
+import { Link } from 'react-router'
 
 interface TaskCardProps {
-  task: Task
+  data: Task
 }
 
-const priorityNames = ['Alta', 'Média', 'Baixa']
-
-export function TaskCard({ task }: TaskCardProps) {
+export function TaskCard({ data }: TaskCardProps) {
   return (
-    <div className="bg-neutral-800 my-3 p-4 rounded">
+    <Link
+      className="bg-neutral-800 my-3 p-4 rounded block border"
+      to={`/task/${data.id}`}
+    >
       <div className="flex justify-between items-start">
-        <h2>{task.name}</h2>
+        <h2>{data.name}</h2>
       </div>
 
-      <span className="text-sm">
-        Prioridade: {priorityNames[task.priority - 1]}
-      </span>
+      <DateInterval from={data.createdAt} to={data.updatedAt} />
 
-      <span className="flex gap-2 text-xs mt-2">
-        {format(task.createdAt, 'dd MMM yyyy')} <MoveRight size={14} />{' '}
-        {format(task.updatedAt, 'dd MMM yyyy')}
-      </span>
-    </div>
+      <PriorityBadge value={data.priority} />
+    </Link>
   )
 }

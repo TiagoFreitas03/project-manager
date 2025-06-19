@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react'
+import { ChevronsDown, ChevronsUp, Equal, Plus } from 'lucide-react'
 import type { FormEvent } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -46,7 +46,7 @@ export function CreateTaskDialog({ projectId }: CreateTaskDialogProps) {
             <DialogTitle>Nova Tarefa</DialogTitle>
 
             <DialogDescription>
-              Preencha os campos abaixo para criar uma tarefa.
+              Preencha os campos abaixo para criar uma nova tarefa.
             </DialogDescription>
           </DialogHeader>
 
@@ -61,9 +61,17 @@ export function CreateTaskDialog({ projectId }: CreateTaskDialogProps) {
               </SelectTrigger>
 
               <SelectContent>
-                <SelectItem value="1">Alta</SelectItem>
-                <SelectItem value="2">Média</SelectItem>
-                <SelectItem value="3">Baixa</SelectItem>
+                <SelectItem value="1">
+                  <ChevronsUp className="text-red-500" /> Alta
+                </SelectItem>
+
+                <SelectItem value="2">
+                  <Equal className="text-yellow-500" /> Média
+                </SelectItem>
+
+                <SelectItem value="3">
+                  <ChevronsDown className="text-green-500" /> Baixa
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>

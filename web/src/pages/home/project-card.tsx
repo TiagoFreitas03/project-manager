@@ -1,10 +1,9 @@
-import { format } from 'date-fns'
-import { MoveRight } from 'lucide-react'
 import { Link } from 'react-router'
 
 import { StatusBadge } from '@/components/status-badge'
 import { Progress } from '@/components/ui/progress'
 import type { ProjectSummary } from '@/interfaces/project-summary'
+import { DateInterval } from '@/components/date-interval'
 
 interface ProjectCardProps {
   data: ProjectSummary
@@ -19,10 +18,7 @@ export function ProjectCard({ data }: ProjectCardProps) {
     >
       <h2 className="font-semibold mb-2">{data.name}</h2>
 
-      <span className="flex text-xs gap-2 items-center mb-2">
-        {format(data.createdAt, 'dd MMM yyyy')} <MoveRight size={14} />{' '}
-        {format(data.updatedAt, 'dd MMM yyyy')}
-      </span>
+      <DateInterval from={data.createdAt} to={data.updatedAt} />
 
       <StatusBadge value={data.status} />
 

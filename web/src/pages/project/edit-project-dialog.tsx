@@ -14,19 +14,18 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import type { Project } from '@/interfaces/project'
 
 interface EditProjectDialogProps {
-  id: string
-  description: string
-  repositoryUrl: string
+  data: Project
 }
 
-export function EditProjectDialog({ id, ...props }: EditProjectDialogProps) {
-  const [description, setDescription] = useState(props.description)
-  const [repositoryUrl, setRepositoryUrl] = useState(props.repositoryUrl)
+export function EditProjectDialog({ data }: EditProjectDialogProps) {
+  const [description, setDescription] = useState(data.description)
+  const [repositoryUrl, setRepositoryUrl] = useState(data.repositoryUrl)
 
   function handleEditProject(event: FormEvent) {
-    alert(id)
+    alert(data.id)
     event.preventDefault()
   }
 

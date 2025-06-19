@@ -33,9 +33,9 @@ export function Home() {
       <FiltersForm />
 
       <div className="my-4 grid grid-cols-3 gap-3">
-        {projects.map((project) => {
-          return <ProjectCard key={project.id} data={project} />
-        })}
+        {projects.map((project) => (
+          <ProjectCard key={project.id} data={project} />
+        ))}
       </div>
 
       <div className="flex justify-between items-center">
