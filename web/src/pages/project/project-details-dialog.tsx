@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog'
 import { Info } from 'lucide-react'
 import { format } from 'date-fns'
-import { KeyValueText } from './key-value-text'
+import { KeyValueText } from '@/components/key-value-text'
 
 interface ProjectDetailsDialogProps {
   name: string
