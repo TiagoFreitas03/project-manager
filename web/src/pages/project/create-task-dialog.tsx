@@ -1,4 +1,4 @@
-import { ChevronsDown, ChevronsUp, Equal, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import type { FormEvent } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -13,14 +13,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { PrioritySelect } from '@/components/priority-select'
 
 interface CreateTaskDialogProps {
   projectId: string
@@ -55,33 +49,15 @@ export function CreateTaskDialog({ projectId }: CreateTaskDialogProps) {
 
             <Textarea placeholder="Descrição" />
 
-            <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Prioridade" />
-              </SelectTrigger>
-
-              <SelectContent>
-                <SelectItem value="1">
-                  <ChevronsUp className="text-red-500" /> Alta
-                </SelectItem>
-
-                <SelectItem value="2">
-                  <Equal className="text-yellow-500" /> Média
-                </SelectItem>
-
-                <SelectItem value="3">
-                  <ChevronsDown className="text-green-500" /> Baixa
-                </SelectItem>
-              </SelectContent>
-            </Select>
+            <PrioritySelect />
           </div>
 
           <DialogFooter>
+            <Button type="submit">Confirmar</Button>
+
             <DialogClose asChild>
               <Button>Cancelar</Button>
             </DialogClose>
-
-            <Button type="submit">Confirmar</Button>
           </DialogFooter>
         </DialogContent>
       </form>
