@@ -47,11 +47,11 @@ export function CreateProjectDialog() {
           </div>
 
           <DialogFooter>
+            <Button type="submit">Confirmar</Button>
+
             <DialogClose asChild>
               <Button>Cancelar</Button>
             </DialogClose>
-
-            <Button type="submit">Confirmar</Button>
           </DialogFooter>
         </DialogContent>
       </form>

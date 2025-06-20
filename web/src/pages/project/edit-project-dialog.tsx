@@ -62,11 +62,11 @@ export function EditProjectDialog({ data }: EditProjectDialogProps) {
           </div>
 
           <DialogFooter>
+            <Button type="submit">Salvar</Button>
+
             <DialogClose asChild>
               <Button>Cancelar</Button>
             </DialogClose>
-
-            <Button type="submit">Salvar</Button>
           </DialogFooter>
         </DialogContent>
       </form>
