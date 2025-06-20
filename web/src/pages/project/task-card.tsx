@@ -19,7 +19,10 @@ export function TaskCard({ data }: TaskCardProps) {
 
       <DateInterval from={data.createdAt} to={data.updatedAt} />
 
-      <PriorityBadge value={data.priority} />
+      <div className="flex items-center gap-1 text-xs">
+        <span>Prioridade: </span>
+        <PriorityBadge value={data.priority} />
+      </div>
     </Link>
   )
 }
