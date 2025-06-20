@@ -7,6 +7,7 @@ import { EditProjectDialog } from './edit-project-dialog'
 import { DeleteProjectDialog } from './delete-project-dialog'
 import type { Project as ProjectType } from '@/interfaces/project'
 import type { Task } from '@/interfaces/task'
+import { Header } from '@/components/header'
 
 const project: ProjectType = {
   id: 'p-1',
@@ -49,7 +50,7 @@ const doneTasks = tasks.filter((task) => task.status === 'DONE')
 export function Project() {
   return (
     <>
-      <header className="flex items-center justify-between border-b pb-3">
+      <Header>
         <span className="flex items-center gap-3 font-bold text-lg uppercase tracking-widest">
           <KanbanSquare color="white" /> {project.name}
         </span>
@@ -63,7 +64,7 @@ export function Project() {
 
           <DeleteProjectDialog id={project.id} />
         </div>
-      </header>
+      </Header>
 
       <div className="grid grid-cols-3 mt-2 gap-2">
         <TasksColumn status="TO_DO" tasks={todoTasks} />

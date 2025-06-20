@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
 import { FiltersForm } from './filters-form'
-import { Header } from './header'
 import { ProjectCard } from './project-card'
 import { Pagination } from '@/components/pagination'
 import type { ProjectSummary } from '@/interfaces/project-summary'
+import { Layers } from 'lucide-react'
+import { CreateProjectDialog } from './create-project-dialog'
+import { Header } from '@/components/header'
 
 const projects: ProjectSummary[] = Array.from({ length: 12 }).map(
   (_, index) => {
@@ -28,7 +30,13 @@ export function Home() {
 
   return (
     <>
-      <Header />
+      <Header>
+        <span className="flex items-center gap-3 font-bold text-lg uppercase tracking-widest">
+          <Layers color="white" /> Projetos
+        </span>
+
+        <CreateProjectDialog />
+      </Header>
 
       <FiltersForm />
 
