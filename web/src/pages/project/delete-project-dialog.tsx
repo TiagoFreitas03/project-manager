@@ -41,10 +41,11 @@ export function DeleteProjectDialog({ id }: DeleteProjectDialogProps) {
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction onClick={handleConfirmDelete}>
             Confirmar
           </AlertDialogAction>
+
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
