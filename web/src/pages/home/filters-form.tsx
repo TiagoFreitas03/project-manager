@@ -22,18 +22,6 @@ export function FiltersForm() {
 
       <Select>
         <SelectTrigger className="w-96">
-          <SelectValue placeholder="Status" />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectItem value="todo">Não iniciado</SelectItem>
-          <SelectItem value="doing">Em progresso</SelectItem>
-          <SelectItem value="done">Finalizado</SelectItem>
-        </SelectContent>
-      </Select>
-
-      <Select>
-        <SelectTrigger className="w-96">
           <SelectValue placeholder="Ordem" />
         </SelectTrigger>
 
