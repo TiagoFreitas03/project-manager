@@ -1,10 +1,12 @@
 import { Either, right } from '@/core/either'
-import { Project } from '../entities/project'
 import {
   OrderProjectsBy,
   ProjectsRepository,
 } from '../repositories/projects-repository'
 import { Order } from '@/core/types/order'
+import { ProjectSummary } from '../entities/value-objects/project-summary'
+import { Status } from '../entities/value-objects/status'
+import { TasksRepository } from '../repositories/tasks-repository'
 
 interface SearchProjectsUseCaseRequest {
   name?: string
@@ -13,10 +15,16 @@ interface SearchProjectsUseCaseRequest {
   order?: Order
 }
 
-type SearchProjectsUseCaseResponse = Either<null, { projects: Project[] }>
+type SearchProjectsUseCaseResponse = Either<
+  null,
+  { projects: ProjectSummary[] }
+>
 
 export class SearchProjectsUseCase {
-  constructor(private projectsRepository: ProjectsRepository) {}
+  constructor(
+    private projectsRepository: ProjectsRepository,
+    private tasksRepository: TasksRepository,
+  ) {}
 
   async execute({
     name,
@@ -31,6 +39,36 @@ export class SearchProjectsUseCase {
       orderBy,
     })
 
-    return right({ projects })
+    const projectsSummary: ProjectSummary[] = []
+
+    for (let i = 0; i < projects.length; i++) {
+      const { id, slug, name, createdAt, updatedAt } = projects[i]
+
+      const tasks = await this.tasksRepository.findManyByProjectId(
+        id.toString(),
+      )
+      const tasksAmount = tasks.length
+      const doneTasks = tasks.filter((t) => t.status === Status.DONE).length
+      const progress = (doneTasks * 100) / tasksAmount
+      const status =
+        progress === 100
+          ? Status.DONE
+          : progress === 0
+            ? Status.TO_DO
+            : Status.DOING
+
+      projectsSummary.push(
+        ProjectSummary.create({
+          slug,
+          name,
+          createdAt,
+          updatedAt,
+          status,
+          progress,
+        }),
+      )
+    }
+
+    return right({ projects: projectsSummary })
   }
 }

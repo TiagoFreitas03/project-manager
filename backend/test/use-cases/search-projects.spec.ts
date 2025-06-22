@@ -1,14 +1,17 @@
 import { InMemoryProjectsRepository } from 'test/repositories/in-memory-projects-repository'
 import { SearchProjectsUseCase } from '@/domain/use-cases/search-projects'
 import { makeProject } from 'test/factories/make-project'
+import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 
 let projectsRepository: InMemoryProjectsRepository
+let tasksRepository: InMemoryTasksRepository
 let sut: SearchProjectsUseCase
 
 describe('Search Projects', () => {
   beforeEach(() => {
     projectsRepository = new InMemoryProjectsRepository()
-    sut = new SearchProjectsUseCase(projectsRepository)
+    tasksRepository = new InMemoryTasksRepository()
+    sut = new SearchProjectsUseCase(projectsRepository, tasksRepository)
   })
 
   it('should be able to fetch all projects', async () => {

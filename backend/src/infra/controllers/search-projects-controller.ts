@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { makeSearchProjectsUseCase } from '../factories/make-search-projects-use-case'
-import { ProjectPresenter } from '../presenters/project-presenter'
+import { ProjectSummaryPresenter } from '../presenters/project-summary-presenter'
 
 export async function searchProjectsController(
   request: FastifyRequest,
@@ -32,6 +32,6 @@ export async function searchProjectsController(
   }
 
   return reply.status(200).send({
-    projects: result.value.projects.map(ProjectPresenter.toHTTP),
+    projects: result.value.projects.map(ProjectSummaryPresenter.toHTTP),
   })
 }
