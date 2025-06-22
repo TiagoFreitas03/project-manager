@@ -49,7 +49,7 @@ export class SearchProjectsUseCase {
       )
       const tasksAmount = tasks.length
       const doneTasks = tasks.filter((t) => t.status === Status.DONE).length
-      const progress = (doneTasks * 100) / tasksAmount
+      const progress = tasksAmount === 0 ? 0 : (doneTasks * 100) / tasksAmount
       const status =
         progress === 100
           ? Status.DONE
