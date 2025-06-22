@@ -1,6 +1,5 @@
 import { Plus } from 'lucide-react'
-import type { FormEvent } from 'react'
-
+import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -14,47 +13,88 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { FormField } from '@/components/form-field'
+import { createProject } from '@/api/create-project'
+import { toast } from 'sonner'
 
 export function CreateProjectDialog() {
-  function handleCreateProject(event: FormEvent) {
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [repositoryUrl, setRepositoryUrl] = useState('')
+
+  async function handleCreateProject(event: FormEvent) {
     event.preventDefault()
+
+    try {
+      await createProject({ name, description, repositoryUrl })
+      toast.success('Projeto cadastrado')
+    } catch (err) {
+      toast.error('Ocorreu um erro. Verifique as informações e tente de novo!')
+      console.log(err)
+    }
   }
 
   return (
     <Dialog>
-      <form onSubmit={handleCreateProject}>
-        <DialogTrigger asChild>
-          <Button>
-            <Plus /> Novo
-          </Button>
-        </DialogTrigger>
+      <DialogTrigger asChild>
+        <Button type="button">
+          <Plus />
+        </Button>
+      </DialogTrigger>
 
-        <DialogContent className="bg-neutral-900">
-          <DialogHeader>
-            <DialogTitle>Novo Projeto</DialogTitle>
+      <DialogContent className="bg-neutral-900">
+        <DialogHeader>
+          <DialogTitle>Novo Projeto</DialogTitle>
 
-            <DialogDescription>
-              Preencha os campos abaixo para criar um novo projeto.
-            </DialogDescription>
-          </DialogHeader>
+          <DialogDescription>
+            Preencha os campos abaixo para criar um novo projeto.
+          </DialogDescription>
+        </DialogHeader>
 
-          <div className="grid gap-4">
-            <Input placeholder="Nome" />
+        <form
+          className="grid gap-5"
+          onSubmit={handleCreateProject}
+          autoComplete="off"
+        >
+          <FormField>
+            <Label htmlFor="name">Nome</Label>
 
-            <Textarea placeholder="Descrição" />
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.currentTarget.value)}
+            />
+          </FormField>
 
-            <Input placeholder="Link do Repositório" />
-          </div>
+          <FormField>
+            <Label htmlFor="description">Descrição</Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.currentTarget.value)}
+            />
+          </FormField>
+
+          <FormField>
+            <Label htmlFor="repositoryUrl">Link do repositório</Label>
+            <Input
+              id="repositoryUrl"
+              placeholder="ex.: https://github.com/user/project"
+              value={repositoryUrl}
+              onChange={(e) => setRepositoryUrl(e.currentTarget.value)}
+            />
+          </FormField>
 
           <DialogFooter>
             <Button type="submit">Confirmar</Button>
 
             <DialogClose asChild>
-              <Button>Cancelar</Button>
+              <Button type="button">Cancelar</Button>
             </DialogClose>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }
