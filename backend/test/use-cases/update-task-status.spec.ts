@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
-import { TaskStatus } from '@/domain/entities/value-objects/task-status'
+import { Status } from '@/domain/entities/value-objects/status'
 import { InvalidTaskStatusError } from '@/domain/use-cases/errors/invalid-task-status-error'
 import { UpdateTaskStatusUseCase } from '@/domain/use-cases/update-task-status'
 import { makeTask } from 'test/factories/make-task'
@@ -17,7 +17,7 @@ describe('Update Task Status', () => {
 
   it('should be able to update a task status', async () => {
     const newTask = makeTask(
-      { status: TaskStatus.TO_DO },
+      { status: Status.TO_DO },
       new UniqueEntityId('task-1'),
     )
 
@@ -29,7 +29,7 @@ describe('Update Task Status', () => {
     })
 
     expect(tasksRepository.items[0]).toMatchObject({
-      status: TaskStatus.DOING,
+      status: Status.DOING,
     })
   })
 

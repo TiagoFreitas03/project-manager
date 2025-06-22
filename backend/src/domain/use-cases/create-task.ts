@@ -4,7 +4,7 @@ import { TasksRepository } from '../repositories/tasks-repository'
 import { ProjectsRepository } from '../repositories/projects-repository'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { TaskStatus } from '../entities/value-objects/task-status'
+import { Status } from '../entities/value-objects/status'
 import { InvalidPriorityError } from './errors/invalid-priority-error'
 
 interface CreateTaskUseCaseRequest {
@@ -45,7 +45,7 @@ export class CreateTaskUseCase {
       projectId: new UniqueEntityId(projectId),
       name,
       description,
-      status: TaskStatus.TO_DO,
+      status: Status.TO_DO,
       priority,
     })
 

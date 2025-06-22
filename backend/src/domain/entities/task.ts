@@ -1,13 +1,13 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
-import { TaskStatus } from './value-objects/task-status'
+import { Status } from './value-objects/status'
 
 export interface TaskProps {
   projectId: UniqueEntityId
   name: string
   description: string
-  status: TaskStatus
+  status: Status
   priority: number
   createdAt: Date
   updatedAt: Date
@@ -61,7 +61,7 @@ export class Task extends Entity<TaskProps> {
     this.touch()
   }
 
-  set status(status: TaskStatus) {
+  set status(status: Status) {
     this.props.status = status
     this.touch()
   }

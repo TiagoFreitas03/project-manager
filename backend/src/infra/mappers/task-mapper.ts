@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Task } from '@/domain/entities/task'
-import { TaskStatus } from '@/domain/entities/value-objects/task-status'
+import { Status } from '@/domain/entities/value-objects/status'
 import { Prisma, Task as PrismaTask } from 'generated/prisma'
 
 export class TaskMapper {
@@ -9,7 +9,7 @@ export class TaskMapper {
       {
         name: raw.name,
         description: raw.description,
-        status: TaskStatus[raw.status],
+        status: Status[raw.status],
         priority: raw.priority,
         projectId: new UniqueEntityId(raw.projectId),
         createdAt: raw.createdAt,
