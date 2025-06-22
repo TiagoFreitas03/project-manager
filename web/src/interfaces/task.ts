@@ -1,4 +1,4 @@
-import type { Status } from '@/types/status'
+import type { Status } from '@/enums/status'
 
 export interface Task {
   id: string

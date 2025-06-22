@@ -7,11 +7,17 @@ import type { ProjectSummary } from '@/interfaces/project-summary'
 import { Layers } from 'lucide-react'
 import { CreateProjectDialog } from './create-project-dialog'
 import { Header } from '@/components/header'
+import { Status } from '@/enums/status'
 
 const projects: ProjectSummary[] = Array.from({ length: 12 }).map(
   (_, index) => {
     const progress = index === 0 ? 0 : ((index % 5) + 1) * 20
-    const status = progress === 0 ? 'TO_DO' : progress < 100 ? 'DOING' : 'DONE'
+    const status =
+      progress === 0
+        ? Status.TO_DO
+        : progress < 100
+          ? Status.DOING
+          : Status.DONE
 
     return {
       id: `${index}`,

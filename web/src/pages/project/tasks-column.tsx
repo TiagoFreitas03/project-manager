@@ -2,7 +2,7 @@ import { StatusBadge } from '@/components/status-badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { TaskCard } from './task-card'
 import type { Task } from '@/interfaces/task'
-import type { Status } from '@/types/status'
+import type { Status } from '@/enums/status'
 
 interface TasksColumnProps {
   status: Status

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import type { Status } from '@/types/status'
+import type { Status } from '@/enums/status'
 
 interface StatusBadgeProps {
   value: Status
