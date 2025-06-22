@@ -1,5 +1,7 @@
 import { CreateProjectUseCase } from '@/domain/use-cases/create-project'
+import { DuplicateProjectNameError } from '@/domain/use-cases/errors/duplicate-project-name-error'
 import { InvalidHttpUrlError } from '@/domain/use-cases/errors/invalid-http-url-error'
+import { makeProject } from 'test/factories/make-project'
 import { InMemoryProjectsRepository } from 'test/repositories/in-memory-projects-repository'
 
 let projectsRepository: InMemoryProjectsRepository
@@ -34,5 +36,18 @@ describe('Create Project', () => {
 
     expect(result.isRight()).toBe(false)
     expect(result.value).toBeInstanceOf(InvalidHttpUrlError)
+  })
+
+  it('should not be able to create a project with duplicate name', async () => {
+    projectsRepository.create(makeProject({ name: 'New Project' }))
+
+    const result = await sut.execute({
+      name: 'New Project',
+      description: 'My First Test Project',
+      repositoryUrl: 'https://www.github.com/username/project',
+    })
+
+    expect(result.isRight()).toBe(false)
+    expect(result.value).toBeInstanceOf(DuplicateProjectNameError)
   })
 })
