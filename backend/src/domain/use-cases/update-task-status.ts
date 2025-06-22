@@ -3,7 +3,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { InvalidTaskStatusError } from './errors/invalid-task-status-error'
 import { Task } from '../entities/task'
 import { TasksRepository } from '../repositories/tasks-repository'
-import { stringToStatus } from '../utils/string-to-status'
+import { stringToStatus } from '../utils/string-to-task-status'
 
 interface UpdateTaskStatusUseCaseRequest {
   taskId: string
