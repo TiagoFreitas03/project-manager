@@ -1,4 +1,5 @@
 import fastify from 'fastify'
+import cors from '@fastify/cors'
 import { ZodError } from 'zod'
 import { projectRoutes } from './routes/project-routes'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
@@ -6,6 +7,10 @@ import { BadRequestError } from '@/core/errors/bad-request-error'
 import { taskRoutes } from './routes/task-routes'
 
 export const app = fastify()
+
+app.register(cors, {
+  origin: '*',
+})
 
 app.register(projectRoutes)
 app.register(taskRoutes)
