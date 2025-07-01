@@ -13,7 +13,7 @@ let sut: CreateTaskUseCase
 describe('Create Task', () => {
   beforeEach(() => {
     tasksRepository = new InMemoryTasksRepository()
-    projectsRepository = new InMemoryProjectsRepository()
+    projectsRepository = new InMemoryProjectsRepository(tasksRepository)
     sut = new CreateTaskUseCase(tasksRepository, projectsRepository)
   })
 

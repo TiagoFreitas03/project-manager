@@ -3,13 +3,16 @@ import { Slug } from '@/domain/entities/value-objects/slug'
 import { GetProjectBySlugUseCase } from '@/domain/use-cases/get-project-by-slug'
 import { makeProject } from 'test/factories/make-project'
 import { InMemoryProjectsRepository } from 'test/repositories/in-memory-projects-repository'
+import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 
 let projectsRepository: InMemoryProjectsRepository
 let sut: GetProjectBySlugUseCase
 
 describe('Get Project By Slug', () => {
   beforeEach(() => {
-    projectsRepository = new InMemoryProjectsRepository()
+    projectsRepository = new InMemoryProjectsRepository(
+      new InMemoryTasksRepository(),
+    )
     sut = new GetProjectBySlugUseCase(projectsRepository)
   })
 

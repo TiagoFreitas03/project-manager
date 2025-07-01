@@ -4,13 +4,16 @@ import { EditProjectUseCase } from '@/domain/use-cases/edit-project'
 import { InvalidHttpUrlError } from '@/domain/use-cases/errors/invalid-http-url-error'
 import { makeProject } from 'test/factories/make-project'
 import { InMemoryProjectsRepository } from 'test/repositories/in-memory-projects-repository'
+import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 
 let projectsRepository: InMemoryProjectsRepository
 let sut: EditProjectUseCase
 
 describe('Edit Project', () => {
   beforeEach(() => {
-    projectsRepository = new InMemoryProjectsRepository()
+    projectsRepository = new InMemoryProjectsRepository(
+      new InMemoryTasksRepository(),
+    )
     sut = new EditProjectUseCase(projectsRepository)
   })
 

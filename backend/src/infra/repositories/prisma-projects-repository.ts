@@ -1,10 +1,12 @@
 import { Project } from '@/domain/entities/project'
 import {
+  CountProjectsFilters,
   ProjectsRepository,
   SearchProjectsFilters,
 } from '@/domain/repositories/projects-repository'
 import { ProjectMapper } from '../mappers/project-mapper'
 import { prisma } from '../lib/prisma'
+import { ProjectSummaryMapper } from '../mappers/project-summary-mapper'
 
 export class PrismaProjectsRepository implements ProjectsRepository {
   async create(project: Project) {
@@ -41,13 +43,16 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       where: {
         name: { contains: name },
       },
+      include: {
+        tasks: true,
+      },
       orderBy: {
         [orderBy]: order,
       },
       skip: page * 20 - 20,
     })
 
-    return projects.map(ProjectMapper.toDomain)
+    return projects.map(ProjectSummaryMapper.toDomain)
   }
 
   async findBySlug(slug: string) {
@@ -66,6 +71,14 @@ export class PrismaProjectsRepository implements ProjectsRepository {
     await prisma.project.delete({
       where: {
         id: project.id.toString(),
+      },
+    })
+  }
+
+  async count({ name = '' }: CountProjectsFilters) {
+    return prisma.project.count({
+      where: {
+        name: { contains: name },
       },
     })
   }

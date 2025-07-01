@@ -3,13 +3,16 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error'
 import { DeleteProjectUseCase } from '@/domain/use-cases/delete-project'
 import { makeProject } from 'test/factories/make-project'
 import { InMemoryProjectsRepository } from 'test/repositories/in-memory-projects-repository'
+import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 
 let projectsRepository: InMemoryProjectsRepository
 let sut: DeleteProjectUseCase
 
 describe('Delete Project', () => {
   beforeEach(() => {
-    projectsRepository = new InMemoryProjectsRepository()
+    projectsRepository = new InMemoryProjectsRepository(
+      new InMemoryTasksRepository(),
+    )
     sut = new DeleteProjectUseCase(projectsRepository)
   })
 

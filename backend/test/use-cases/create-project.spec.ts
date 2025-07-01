@@ -3,13 +3,16 @@ import { DuplicateProjectNameError } from '@/domain/use-cases/errors/duplicate-p
 import { InvalidHttpUrlError } from '@/domain/use-cases/errors/invalid-http-url-error'
 import { makeProject } from 'test/factories/make-project'
 import { InMemoryProjectsRepository } from 'test/repositories/in-memory-projects-repository'
+import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 
 let projectsRepository: InMemoryProjectsRepository
 let sut: CreateProjectUseCase
 
 describe('Create Project', () => {
   beforeEach(() => {
-    projectsRepository = new InMemoryProjectsRepository()
+    projectsRepository = new InMemoryProjectsRepository(
+      new InMemoryTasksRepository(),
+    )
     sut = new CreateProjectUseCase(projectsRepository)
   })
 

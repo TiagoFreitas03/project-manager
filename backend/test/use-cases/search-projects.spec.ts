@@ -4,14 +4,14 @@ import { makeProject } from 'test/factories/make-project'
 import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 
 let projectsRepository: InMemoryProjectsRepository
-let tasksRepository: InMemoryTasksRepository
 let sut: SearchProjectsUseCase
 
 describe('Search Projects', () => {
   beforeEach(() => {
-    projectsRepository = new InMemoryProjectsRepository()
-    tasksRepository = new InMemoryTasksRepository()
-    sut = new SearchProjectsUseCase(projectsRepository, tasksRepository)
+    projectsRepository = new InMemoryProjectsRepository(
+      new InMemoryTasksRepository(),
+    )
+    sut = new SearchProjectsUseCase(projectsRepository)
   })
 
   it('should be able to fetch all projects', async () => {
@@ -53,7 +53,7 @@ describe('Search Projects', () => {
   })
 
   it('should be able fetch projects from second page', async () => {
-    for (let i = 1; i <= 22; i++) {
+    for (let i = 1; i <= 14; i++) {
       const projectNumber = String(i).padStart(2, '0')
 
       await projectsRepository.create(
@@ -64,8 +64,9 @@ describe('Search Projects', () => {
     const result = await sut.execute({ page: 2 })
 
     expect(result.value?.projects).toEqual([
-      expect.objectContaining({ name: 'Project 21' }),
-      expect.objectContaining({ name: 'Project 22' }),
+      expect.objectContaining({ name: 'Project 13' }),
+      expect.objectContaining({ name: 'Project 14' }),
     ])
+    expect(result.value?.pages).toEqual(2)
   })
 })

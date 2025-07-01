@@ -1,13 +1,11 @@
 import { ValueObject } from '@/core/entities/value-object'
-import { Slug } from './slug'
-import { Status } from './status'
 
 export interface ProjectSummaryProps {
-  slug: Slug
+  slug: string
   name: string
   createdAt: Date
   updatedAt: Date
-  status: Status
+  status: string
   progress: number
 }
 
