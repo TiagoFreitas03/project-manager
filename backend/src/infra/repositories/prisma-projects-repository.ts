@@ -49,7 +49,8 @@ export class PrismaProjectsRepository implements ProjectsRepository {
       orderBy: {
         [orderBy]: order,
       },
-      skip: page * 20 - 20,
+      take: 12,
+      skip: page * 12 - 12,
     })
 
     return projects.map(ProjectSummaryMapper.toDomain)
