@@ -1,5 +1,4 @@
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
 import { FiltersForm } from './filters-form'
 import { ProjectCard } from './project-card'
 import { Pagination } from '@/components/pagination'
@@ -7,32 +6,35 @@ import type { ProjectSummary } from '@/interfaces/project-summary'
 import { Layers } from 'lucide-react'
 import { CreateProjectDialog } from './create-project-dialog'
 import { Header } from '@/components/header'
-import { Status } from '@/enums/status'
-
-const projects: ProjectSummary[] = Array.from({ length: 12 }).map(
-  (_, index) => {
-    const progress = index === 0 ? 0 : ((index % 5) + 1) * 20
-    const status =
-      progress === 0
-        ? Status.TO_DO
-        : progress < 100
-          ? Status.DOING
-          : Status.DONE
-
-    return {
-      id: `${index}`,
-      name: `Project ${index + 1}`,
-      createdAt: new Date(2023, index, 1),
-      updatedAt: new Date(2024, index, 1),
-      status,
-      slug: `project-${index + 1}`,
-      progress,
-    }
-  },
-)
+import { EmptyResult } from '@/components/empty-result'
+import { searchProjects } from '@/api/search-projects'
+import { useSearchParams } from 'react-router'
+import { z } from 'zod'
 
 export function Home() {
-  const [page, setPage] = useState(1)
+  const [projects, setProjects] = useState<ProjectSummary[]>([])
+  const [totalPages, setTotalPages] = useState(1)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const name = searchParams.get('name') ?? undefined
+  const orderBy = searchParams.get('order') ?? 'updatedAt'
+  const page = z.coerce.number().parse(searchParams.get('page') ?? '1')
+
+  useEffect(() => {
+    searchProjects({ name, orderBy, page }).then((data) => {
+      setProjects(data.projects)
+      setTotalPages(data.pages)
+    })
+  }, [name, orderBy, page])
+
+  function handlePaginate(page: number) {
+    setSearchParams((state) => {
+      state.set('page', page.toString())
+
+      return state
+    })
+  }
 
   return (
     <>
@@ -46,15 +48,25 @@ export function Home() {
 
       <FiltersForm />
 
-      <div className="my-4 grid grid-cols-3 gap-3">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} data={project} />
-        ))}
-      </div>
+      {projects.length === 0 ? (
+        <EmptyResult />
+      ) : (
+        <div className="flex flex-col justify-between min-h-[82%]">
+          <div className="grid grid-cols-3 gap-3">
+            {projects.map((project, index) => (
+              <ProjectCard key={index} data={project} />
+            ))}
+          </div>
 
-      <div className="flex justify-between items-center">
-        <Pagination pages={3} currentPage={page} onPageChange={setPage} />
-      </div>
+          <div className="flex justify-between items-center">
+            <Pagination
+              pages={totalPages}
+              currentPage={page}
+              onPageChange={handlePaginate}
+            />
+          </div>
+        </div>
+      )}
     </>
   )
 }
