@@ -1,9 +1,7 @@
 import clsx from 'clsx'
 
-import type { Status } from '@/enums/status'
-
 interface StatusBadgeProps {
-  value: Status
+  value: string
   size?: 'xs' | 'sm'
 }
 

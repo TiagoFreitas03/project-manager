@@ -8,7 +8,6 @@ import { DeleteProjectDialog } from './delete-project-dialog'
 import type { Project as ProjectType } from '@/interfaces/project'
 import type { Task } from '@/interfaces/task'
 import { Header } from '@/components/header'
-import { Status } from '@/enums/status'
 
 const project: ProjectType = {
   id: 'p-1',
@@ -24,8 +23,7 @@ const tasks: Task[] = Array.from({ length: 21 })
     return {
       id: index.toString(),
       name: `Task ${index + 1}`,
-      status:
-        index < 7 ? Status.TO_DO : index < 14 ? Status.DOING : Status.DONE,
+      status: index < 7 ? 'TO_DO' : index < 14 ? 'DOING' : 'DONE',
       priority: (index % 3) + 1,
       createdAt: new Date(2025, index % 12, 1),
       updatedAt: new Date(2025, index % 12, (index % 30) + 1),
@@ -67,11 +65,11 @@ export function Project() {
       </Header>
 
       <div className="grid grid-cols-3 mt-2 gap-2">
-        <TasksColumn status={Status.TO_DO} tasks={todoTasks} />
+        <TasksColumn status={'TO_DO'} tasks={todoTasks} />
 
-        <TasksColumn status={Status.DOING} tasks={doingTasks} />
+        <TasksColumn status={'DOING'} tasks={doingTasks} />
 
-        <TasksColumn status={Status.DONE} tasks={doneTasks} />
+        <TasksColumn status={'DONE'} tasks={doneTasks} />
       </div>
     </>
   )

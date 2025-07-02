@@ -1,11 +1,8 @@
-import type { Status } from '@/enums/status'
-
 export interface ProjectSummary {
-  id: string
+  slug: string
   name: string
   createdAt: Date
   updatedAt: Date
-  status: Status
-  slug: string
   progress: number
+  status: string
 }

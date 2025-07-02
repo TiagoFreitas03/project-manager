@@ -9,13 +9,12 @@ import { Separator } from '@/components/ui/separator'
 import { PriorityBadge } from '@/components/priority-badge'
 import { StatusBadge } from '@/components/status-badge'
 import { Button } from '@/components/ui/button'
-import { Status } from '@/enums/status'
 
 const task: TaskDetails = {
   id: 'task-1',
   name: 'Tarefa 1',
   description: 'Descricao da Tarefa 01...',
-  status: Status.DOING,
+  status: 'DOING',
   priority: 2,
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -62,7 +61,7 @@ export function Task() {
                     variant="ghost"
                     className="dark:hover:bg-neutral-900 p-0"
                   >
-                    <StatusBadge value={Status[status]} />
+                    <StatusBadge value={status} />
                   </Button>
                 )
               })}
