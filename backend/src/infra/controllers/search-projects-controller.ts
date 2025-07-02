@@ -33,5 +33,6 @@ export async function searchProjectsController(
 
   return reply.status(200).send({
     projects: result.value.projects.map(ProjectSummaryPresenter.toHTTP),
+    pages: result.value.pages,
   })
 }
