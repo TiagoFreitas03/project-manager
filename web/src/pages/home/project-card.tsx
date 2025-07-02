@@ -12,7 +12,7 @@ interface ProjectCardProps {
 export function ProjectCard({ data }: ProjectCardProps) {
   return (
     <Link
-      key={data.id}
+      key={data.slug}
       className="bg-neutral-800 p-3 rounded"
       to={`/project/${data.slug}`}
     >
