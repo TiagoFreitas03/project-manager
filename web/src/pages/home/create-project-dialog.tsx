@@ -29,6 +29,9 @@ export function CreateProjectDialog() {
     try {
       await createProject({ name, description, repositoryUrl })
       toast.success('Projeto cadastrado')
+      setName('')
+      setDescription('')
+      setRepositoryUrl('')
     } catch (err) {
       toast.error('Ocorreu um erro. Verifique as informações e tente de novo!')
       console.log(err)
