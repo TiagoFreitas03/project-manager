@@ -1,5 +1,4 @@
 import { KanbanSquare } from 'lucide-react'
-
 import { TasksColumn } from './tasks-column'
 import { CreateTaskDialog } from './create-task-dialog'
 import { ProjectDetailsDialog } from './project-details-dialog'
@@ -8,15 +7,9 @@ import { DeleteProjectDialog } from './delete-project-dialog'
 import type { Project as ProjectType } from '@/interfaces/project'
 import type { Task } from '@/interfaces/task'
 import { Header } from '@/components/header'
-
-const project: ProjectType = {
-  id: 'p-1',
-  name: 'Projeto 1',
-  description: 'Descricao do projeto 1',
-  repositoryUrl: 'http://www.github.com/TiagoFreitas03/project-manager',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-}
+import { useParams } from 'react-router'
+import { useEffect, useState } from 'react'
+import { getProjectBySlug } from '@/api/get-project-by-slug'
 
 const tasks: Task[] = Array.from({ length: 21 })
   .map((_, index) => {
@@ -46,6 +39,20 @@ const doingTasks = tasks.filter((task) => task.status === 'DOING')
 const doneTasks = tasks.filter((task) => task.status === 'DONE')
 
 export function Project() {
+  const { slug } = useParams<{ slug: string }>()
+
+  const [project, setProject] = useState<ProjectType>()
+
+  useEffect(() => {
+    if (slug) {
+      getProjectBySlug(slug).then((data) => setProject(data))
+    }
+  }, [slug])
+
+  if (!project) {
+    return <></>
+  }
+
   return (
     <>
       <Header>
