@@ -52,11 +52,11 @@ export function ProjectDetailsDialog({ data }: ProjectDetailsDialogProps) {
           </KeyValue>
 
           <KeyValue keyName="Criado Em">
-            {format(data.createdAt.toDateString(), 'dd MMM yyyy')}
+            {format(new Date(data.createdAt), 'dd MMM yyyy')}
           </KeyValue>
 
           <KeyValue keyName="Última Alteração">
-            {format(data.updatedAt.toDateString(), 'dd MMM yyyy')}
+            {format(new Date(data.updatedAt), 'dd MMM yyyy')}
           </KeyValue>
         </div>
 

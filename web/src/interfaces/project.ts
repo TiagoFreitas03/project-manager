@@ -2,7 +2,8 @@ export interface Project {
   id: string
   name: string
   description: string
+  slug: string
   repositoryUrl: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
 }
