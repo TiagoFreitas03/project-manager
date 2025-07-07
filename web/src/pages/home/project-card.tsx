@@ -18,7 +18,10 @@ export function ProjectCard({ data }: ProjectCardProps) {
     >
       <h2 className="font-semibold mb-2">{data.name}</h2>
 
-      <DateInterval from={data.createdAt} to={data.updatedAt} />
+      <DateInterval
+        from={new Date(data.createdAt)}
+        to={new Date(data.updatedAt)}
+      />
 
       <StatusBadge value={data.status} />
 
