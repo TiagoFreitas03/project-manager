@@ -1,4 +1,3 @@
-// import type { ProjectSummary } from '@/interfaces/project-summary'
 import { api } from '@/lib/axios'
 
 interface CreateProjectData {
