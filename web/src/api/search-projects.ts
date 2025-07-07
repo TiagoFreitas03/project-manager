@@ -7,7 +7,7 @@ interface SearchProjectsFilters {
   orderBy?: string
 }
 
-interface SearchProjectsResult {
+interface SearchProjectsResponse {
   projects: ProjectSummary[]
   pages: number
 }
@@ -19,7 +19,7 @@ export async function searchProjects({
 }: SearchProjectsFilters) {
   const order = orderBy === 'name' ? 'asc' : 'desc'
 
-  const response = await api.get<SearchProjectsResult>('/projects', {
+  const response = await api.get<SearchProjectsResponse>('/projects', {
     params: {
       name,
       page,
