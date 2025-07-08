@@ -12,8 +12,10 @@ import { Button } from '@/components/ui/button'
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { getTaskById } from '@/api/get-task-by-id'
+import { updateTaskStatus } from '@/api/update-task-status'
+import { toast } from 'sonner'
 
-const statuses = ['TO_DO', 'DOING', 'DONE'] as const
+const statuses = ['TO_DO', 'DOING', 'DONE']
 
 export function Task() {
   const { id } = useParams<{ id: string }>()
@@ -26,8 +28,22 @@ export function Task() {
     }
   }, [id])
 
-  if (!task) {
+  if (!task || !id) {
     return <h1>Tarefa não encontrada.</h1>
+  }
+
+  async function handleUpdateTaskStatus(status: string) {
+    if (!id) {
+      return
+    }
+
+    try {
+      await updateTaskStatus({ id, status })
+      window.location.reload()
+    } catch (err) {
+      toast.error('Ocorreu algum erro ao atualizar o status!')
+      console.log(err)
+    }
   }
 
   return (
@@ -67,6 +83,8 @@ export function Task() {
                     key={status}
                     variant="ghost"
                     className="dark:hover:bg-neutral-900 p-0"
+                    type="button"
+                    onClick={() => handleUpdateTaskStatus(status)}
                   >
                     <StatusBadge value={status} />
                   </Button>
