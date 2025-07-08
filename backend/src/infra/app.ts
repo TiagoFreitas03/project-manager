@@ -10,6 +10,7 @@ export const app = fastify()
 
 app.register(cors, {
   origin: '*',
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
 })
 
 app.register(projectRoutes)
