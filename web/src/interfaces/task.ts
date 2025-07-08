@@ -3,6 +3,6 @@ export interface Task {
   name: string
   status: string
   priority: number
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
 }
