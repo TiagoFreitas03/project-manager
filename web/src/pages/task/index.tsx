@@ -9,20 +9,27 @@ import { Separator } from '@/components/ui/separator'
 import { PriorityBadge } from '@/components/priority-badge'
 import { StatusBadge } from '@/components/status-badge'
 import { Button } from '@/components/ui/button'
-
-const task: TaskDetails = {
-  id: 'task-1',
-  name: 'Tarefa 1',
-  description: 'Descricao da Tarefa 01...',
-  status: 'DOING',
-  priority: 2,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-}
+import { useParams } from 'react-router'
+import { useEffect, useState } from 'react'
+import { getTaskById } from '@/api/get-task-by-id'
 
 const statuses = ['TO_DO', 'DOING', 'DONE'] as const
 
 export function Task() {
+  const { id } = useParams<{ id: string }>()
+
+  const [task, setTask] = useState<TaskDetails>()
+
+  useEffect(() => {
+    if (id) {
+      getTaskById(id).then(setTask)
+    }
+  }, [id])
+
+  if (!task) {
+    return <h1>Tarefa não encontrada.</h1>
+  }
+
   return (
     <>
       <Header>
@@ -72,11 +79,11 @@ export function Task() {
           </KeyValue>
 
           <KeyValue keyName="Criado Em">
-            {format(task.createdAt.toDateString(), 'dd MMM yyyy')}
+            {format(new Date(task.createdAt), 'dd MMM yyyy')}
           </KeyValue>
 
           <KeyValue keyName="Última Alteração">
-            {format(task.updatedAt.toDateString(), 'dd MMM yyyy')}
+            {format(new Date(task.updatedAt), 'dd MMM yyyy')}
           </KeyValue>
         </div>
       </div>
