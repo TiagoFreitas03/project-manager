@@ -3,9 +3,10 @@ import clsx from 'clsx'
 interface StatusBadgeProps {
   value: string
   size?: 'xs' | 'sm'
+  active?: boolean
 }
 
-export function StatusBadge({ value, size = 'xs' }: StatusBadgeProps) {
+export function StatusBadge({ value, size = 'xs', active }: StatusBadgeProps) {
   function formatStatus() {
     if (value === 'TO_DO') {
       return 'Pendente'
@@ -26,6 +27,7 @@ export function StatusBadge({ value, size = 'xs' }: StatusBadgeProps) {
         'bg-pink-600/50': value === 'DONE',
         'text-xs': size === 'xs',
         'text-sm': size === 'sm',
+        'border-2 border-zinc-400': active,
       })}
     >
       &#9679; {formatStatus()}
