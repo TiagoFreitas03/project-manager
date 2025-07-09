@@ -12,14 +12,25 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { deleteProject } from '@/api/delete-project'
+import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
 
 interface DeleteProjectDialogProps {
   id: string
 }
 
 export function DeleteProjectDialog({ id }: DeleteProjectDialogProps) {
-  function handleConfirmDelete() {
-    alert(id)
+  const navigate = useNavigate()
+
+  async function handleConfirmDelete() {
+    try {
+      await deleteProject(id)
+      navigate('/')
+    } catch (err) {
+      toast.error('Ocorreu algum erro ao excluir o projeto!')
+      console.log(err)
+    }
   }
 
   return (
