@@ -15,6 +15,10 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import type { Project } from '@/interfaces/project'
+import { editProject } from '@/api/edit-project'
+import { toast } from 'sonner'
+import { FormField } from '@/components/form-field'
+import { Label } from '@/components/ui/label'
 
 interface EditProjectDialogProps {
   data: Project
@@ -24,42 +28,53 @@ export function EditProjectDialog({ data }: EditProjectDialogProps) {
   const [description, setDescription] = useState(data.description)
   const [repositoryUrl, setRepositoryUrl] = useState(data.repositoryUrl)
 
-  function handleEditProject(event: FormEvent) {
-    alert(data.id)
+  async function handleEditProject(event: FormEvent) {
     event.preventDefault()
+
+    try {
+      await editProject({ id: data.id, description, repositoryUrl })
+      toast.success('Projeto atualizado com sucesso!')
+    } catch (err) {
+      toast.error('Ocorreu um erro. Verifique as informações e tente de novo!')
+      console.log(err)
+    }
   }
 
   return (
     <Dialog>
-      <form onSubmit={handleEditProject}>
-        <DialogTrigger asChild>
-          <Button title="Editar Projeto">
-            <Edit />
-          </Button>
-        </DialogTrigger>
+      <DialogTrigger asChild>
+        <Button title="Editar Projeto">
+          <Edit />
+        </Button>
+      </DialogTrigger>
 
-        <DialogContent className="bg-neutral-900">
-          <DialogHeader>
-            <DialogTitle>Editar Projeto</DialogTitle>
+      <DialogContent className="bg-neutral-900">
+        <DialogHeader>
+          <DialogTitle>Editar Projeto</DialogTitle>
 
-            <DialogDescription>
-              Altere abaixo as informações do projeto.
-            </DialogDescription>
-          </DialogHeader>
+          <DialogDescription>
+            Altere abaixo as informações do projeto.
+          </DialogDescription>
+        </DialogHeader>
 
-          <div className="grid gap-4">
+        <form className="grid gap-5" onSubmit={handleEditProject}>
+          <FormField>
+            <Label htmlFor="description">Descrição</Label>
             <Textarea
-              placeholder="Descrição"
+              id="description"
               value={description}
               onChange={(event) => setDescription(event.currentTarget.value)}
             />
+          </FormField>
 
+          <FormField>
+            <Label htmlFor="repositoryUrl">Link do Repositório</Label>
             <Input
-              placeholder="Link do Repositório"
+              id="repositoryUrl"
               value={repositoryUrl}
               onChange={(event) => setRepositoryUrl(event.currentTarget.value)}
             />
-          </div>
+          </FormField>
 
           <DialogFooter>
             <Button type="submit">Salvar</Button>
@@ -68,8 +83,8 @@ export function EditProjectDialog({ data }: EditProjectDialogProps) {
               <Button>Cancelar</Button>
             </DialogClose>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }
