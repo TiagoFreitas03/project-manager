@@ -16,6 +16,10 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import type { TaskDetails } from '@/interfaces/task-details'
 import { PrioritySelect } from '@/components/priority-select'
+import { FormField } from '@/components/form-field'
+import { Label } from '@/components/ui/label'
+import { editTask } from '@/api/edit-task'
+import { toast } from 'sonner'
 
 interface EditTaskDialogProps {
   data: TaskDetails
@@ -26,47 +30,61 @@ export function EditTaskDialog({ data }: EditTaskDialogProps) {
   const [description, setDescription] = useState(data.description)
   const [priority, setPriority] = useState(data.priority)
 
-  function handleEditTask(event: FormEvent) {
-    alert(data.id)
+  async function handleEditTask(event: FormEvent) {
     event.preventDefault()
+
+    try {
+      await editTask({ id: data.id, name, description, priority })
+      window.location.reload()
+    } catch (err) {
+      toast.error('Ocorreu algum erro ao editar a tarefa!')
+      console.log(err)
+    }
   }
 
   return (
     <Dialog>
-      <form onSubmit={handleEditTask}>
-        <DialogTrigger asChild>
-          <Button title="Editar Tarefa">
-            <Edit />
-          </Button>
-        </DialogTrigger>
+      <DialogTrigger asChild>
+        <Button title="Editar Tarefa">
+          <Edit />
+        </Button>
+      </DialogTrigger>
 
-        <DialogContent className="bg-neutral-900">
-          <DialogHeader>
-            <DialogTitle>Editar Tarefa</DialogTitle>
+      <DialogContent className="bg-neutral-900">
+        <DialogHeader>
+          <DialogTitle>Editar Tarefa</DialogTitle>
 
-            <DialogDescription>
-              Altere abaixo as informações da tarefa.
-            </DialogDescription>
-          </DialogHeader>
+          <DialogDescription>
+            Altere abaixo as informações da tarefa.
+          </DialogDescription>
+        </DialogHeader>
 
-          <div className="grid gap-4">
+        <form onSubmit={handleEditTask} className="grid gap-5">
+          <FormField>
+            <Label htmlFor="name">Nome</Label>
             <Input
-              placeholder="Nome"
+              id="name"
               value={name}
               onChange={(event) => setName(event.currentTarget.value)}
             />
+          </FormField>
 
+          <FormField>
+            <Label htmlFor="description">Descrição</Label>
             <Textarea
-              placeholder="Descrição"
+              id="description"
               value={description}
               onChange={(event) => setDescription(event.currentTarget.value)}
             />
+          </FormField>
 
+          <FormField>
+            <Label>Prioridade</Label>
             <PrioritySelect
               value={priority.toString()}
               onValueChange={(value) => setPriority(Number(value))}
             />
-          </div>
+          </FormField>
 
           <DialogFooter>
             <Button type="submit">Salvar</Button>
@@ -75,8 +93,8 @@ export function EditTaskDialog({ data }: EditTaskDialogProps) {
               <Button>Cancelar</Button>
             </DialogClose>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }
