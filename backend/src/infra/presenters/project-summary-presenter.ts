@@ -8,7 +8,7 @@ export class ProjectSummaryPresenter {
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
       status: project.status,
-      progress: project.progress,
+      progress: parseInt(String(project.progress)),
     }
   }
 }
