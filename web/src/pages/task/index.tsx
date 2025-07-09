@@ -5,7 +5,6 @@ import { DeleteTaskDialog } from './delete-task-dialog'
 import { EditTaskDialog } from './edit-task-dialog'
 import { KeyValue } from '@/components/key-value'
 import { format } from 'date-fns'
-import { Separator } from '@/components/ui/separator'
 import { PriorityBadge } from '@/components/priority-badge'
 import { StatusBadge } from '@/components/status-badge'
 import { Button } from '@/components/ui/button'
@@ -50,7 +49,7 @@ export function Task() {
     <>
       <Header>
         <span className="flex items-center gap-3 font-bold text-lg uppercase tracking-widest">
-          <FileText color="white" /> {task.name}
+          <FileText color="white" /> Detalhes da tarefa
         </span>
 
         <div className="flex gap-2">
@@ -60,24 +59,17 @@ export function Task() {
         </div>
       </Header>
 
-      <div className="py-4 px-2 flex justify-between h-[94%]">
-        <div className="flex-1">
+      <div className="py-4 px-1 flex flex-col justify-between h-[94%]">
+        <div className="grid gap-2">
+          <KeyValue keyName="Nome">{task.name}</KeyValue>
+
           <KeyValue keyName="Descrição">{task.description}</KeyValue>
         </div>
 
-        <Separator orientation="vertical" />
-
-        <div className="w-64 mx-4 flex flex-col gap-4">
+        <div className="flex justify-between items-center">
           <KeyValue keyName="Status">
-            <StatusBadge value={task.status} />
-          </KeyValue>
-
-          <span>Mover para:</span>
-
-          <div className="flex justify-around">
-            {statuses
-              .filter((status) => status !== task.status)
-              .map((status) => {
+            <div className="flex justify-around items-center gap-1.5">
+              {statuses.map((status) => {
                 return (
                   <Button
                     key={status}
@@ -86,11 +78,15 @@ export function Task() {
                     type="button"
                     onClick={() => handleUpdateTaskStatus(status)}
                   >
-                    <StatusBadge value={status} />
+                    <StatusBadge
+                      value={status}
+                      active={status === task.status}
+                    />
                   </Button>
                 )
               })}
-          </div>
+            </div>
+          </KeyValue>
 
           <KeyValue keyName="Prioridade">
             <PriorityBadge value={task.priority}></PriorityBadge>
