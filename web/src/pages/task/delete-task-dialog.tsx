@@ -12,14 +12,25 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { deleteTask } from '@/api/delete-task'
+import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
 
 interface DeleteTaskDialogProps {
   id: string
 }
 
 export function DeleteTaskDialog({ id }: DeleteTaskDialogProps) {
-  function handleConfirmDelete() {
-    alert(id)
+  const navigate = useNavigate()
+
+  async function handleConfirmDelete() {
+    try {
+      await deleteTask(id)
+      navigate(-1)
+    } catch (err) {
+      toast.error('Ocorreu algum erro ao excluir a tarefa!')
+      console.log(err)
+    }
   }
 
   return (
