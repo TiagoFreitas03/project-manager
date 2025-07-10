@@ -22,11 +22,12 @@ export function Project() {
   const { slug } = useParams<{ slug: string }>()
 
   const [project, setProject] = useState<ProjectType>()
-  const [tasks, setTasks] = useState<ProjectTasks>({
-    toDoTasks: [],
-    doingTasks: [],
-    doneTasks: [],
-  })
+  const [{ toDoTasks, doingTasks, doneTasks }, setTasks] =
+    useState<ProjectTasks>({
+      toDoTasks: [],
+      doingTasks: [],
+      doneTasks: [],
+    })
 
   useEffect(() => {
     if (slug) {
@@ -61,11 +62,11 @@ export function Project() {
       </Header>
 
       <div className="grid grid-cols-3 mt-2 gap-2">
-        <TasksColumn status={'TO_DO'} tasks={tasks.toDoTasks} />
+        <TasksColumn status={'TO_DO'} tasks={toDoTasks} />
 
-        <TasksColumn status={'DOING'} tasks={tasks.doingTasks} />
+        <TasksColumn status={'DOING'} tasks={doingTasks} />
 
-        <TasksColumn status={'DONE'} tasks={tasks.doneTasks} />
+        <TasksColumn status={'DONE'} tasks={doneTasks} />
       </div>
     </>
   )
