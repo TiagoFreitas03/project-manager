@@ -32,13 +32,14 @@ export function Task() {
   }
 
   async function handleUpdateTaskStatus(status: string) {
-    if (!id) {
+    if (!id || !task) {
       return
     }
 
     try {
       await updateTaskStatus({ id, status })
-      window.location.reload()
+      const taskWithNewStatus = { ...task, status }
+      setTask(taskWithNewStatus)
     } catch (err) {
       toast.error('Ocorreu algum erro ao atualizar o status!')
       console.log(err)
