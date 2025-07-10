@@ -29,6 +29,8 @@ export function Project() {
       doneTasks: [],
     })
 
+  const tasksAmount = toDoTasks.length + doingTasks.length + doneTasks.length
+
   useEffect(() => {
     if (slug) {
       getProjectBySlug(slug).then((data) => {
@@ -61,13 +63,19 @@ export function Project() {
         </div>
       </Header>
 
-      <div className="grid grid-cols-3 mt-2 gap-2">
-        <TasksColumn status={'TO_DO'} tasks={toDoTasks} />
+      {tasksAmount === 0 ? (
+        <div className="flex justify-center items-center min-h-[90%] border rounded mt-4">
+          <span>Nenhuma tarefa encontrada.</span>
+        </div>
+      ) : (
+        <div className="grid grid-cols-3 mt-2 gap-2">
+          <TasksColumn status={'TO_DO'} tasks={toDoTasks} />
 
-        <TasksColumn status={'DOING'} tasks={doingTasks} />
+          <TasksColumn status={'DOING'} tasks={doingTasks} />
 
-        <TasksColumn status={'DONE'} tasks={doneTasks} />
-      </div>
+          <TasksColumn status={'DONE'} tasks={doneTasks} />
+        </div>
+      )}
     </>
   )
 }
