@@ -6,7 +6,6 @@ import type { ProjectSummary } from '@/interfaces/project-summary'
 import { Layers } from 'lucide-react'
 import { CreateProjectDialog } from './create-project-dialog'
 import { Header } from '@/components/header'
-import { EmptyResult } from '@/components/empty-result'
 import { searchProjects } from '@/api/search-projects'
 import { useSearchParams } from 'react-router'
 import { z } from 'zod'
@@ -49,7 +48,9 @@ export function Home() {
       <FiltersForm />
 
       {projects.length === 0 ? (
-        <EmptyResult />
+        <div className="flex justify-center items-center min-h-[82%] border rounded">
+          <span>Nenhum projeto encontrado.</span>
+        </div>
       ) : (
         <div className="flex flex-col justify-between min-h-[82%]">
           <div className="grid grid-cols-3 gap-3">
