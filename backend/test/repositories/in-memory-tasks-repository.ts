@@ -9,9 +9,16 @@ export class InMemoryTasksRepository implements TasksRepository {
   }
 
   async findManyByProjectId(projectId: string) {
-    const filteredTasks = this.items.filter(
-      (item) => item.projectId.toString() === projectId,
-    )
+    const fifteenDaysAgo = new Date()
+    fifteenDaysAgo.setDate(new Date().getDate() - 15)
+    fifteenDaysAgo.setHours(0, 0, 0)
+
+    const filteredTasks = this.items.filter((task) => {
+      return (
+        task.projectId.toString() === projectId &&
+        (task.status !== 'DONE' || task.updatedAt >= fifteenDaysAgo)
+      )
+    })
 
     return filteredTasks
   }

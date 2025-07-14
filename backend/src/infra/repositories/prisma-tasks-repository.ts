@@ -11,8 +11,22 @@ export class PrismaTasksRepository implements TasksRepository {
   }
 
   async findManyByProjectId(projectId: string) {
+    const fifteenDaysAgo = new Date()
+    fifteenDaysAgo.setDate(new Date().getDate() - 15)
+    fifteenDaysAgo.setHours(0, 0, 0)
+
     const tasks = await prisma.task.findMany({
-      where: { projectId },
+      where: {
+        projectId,
+        OR: [
+          {
+            status: { not: 'DONE' },
+          },
+          {
+            updatedAt: { gte: fifteenDaysAgo },
+          },
+        ],
+      },
       orderBy: [{ priority: 'asc' }, { updatedAt: 'asc' }],
     })
 
