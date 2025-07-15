@@ -5,12 +5,12 @@ import {
   ProjectsRepository,
   SearchProjectsFilters,
 } from '@/domain/repositories/projects-repository'
-import { TasksRepository } from '@/domain/repositories/tasks-repository'
+import { InMemoryTasksRepository } from './in-memory-tasks-repository'
 
 export class InMemoryProjectsRepository implements ProjectsRepository {
   public items: Project[] = []
 
-  constructor(private tasksRepository: TasksRepository) {}
+  constructor(private tasksRepository: InMemoryTasksRepository) {}
 
   async create(project: Project) {
     this.items.push(project)
@@ -55,8 +55,8 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
 
     for (let i = 0; i < filteredProjects.length; i++) {
       const project = filteredProjects[i]
-      const tasks = await this.tasksRepository.findManyByProjectId(
-        project.id.toString(),
+      const tasks = this.tasksRepository.items.filter(
+        (task) => task.projectId.toString() === project.id.toString(),
       )
       const tasksAmount = tasks.length
       const doneTasks = tasks.filter((t) => t.status === 'DONE').length

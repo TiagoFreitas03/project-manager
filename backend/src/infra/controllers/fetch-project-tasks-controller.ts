@@ -13,9 +13,19 @@ export async function fetchProjectTasksController(
 
   const { projectId } = fetchProjectTasksParamsSchema.parse(request.params)
 
+  const fetchProjectTasksQuerySchema = z.object({
+    archived: z
+      .string()
+      .optional()
+      .default('false')
+      .transform((arg) => arg === 'true'),
+  })
+
+  const { archived } = fetchProjectTasksQuerySchema.parse(request.query)
+
   const fetchProjectTasksUseCase = makeFetchProjectTasksUseCase()
 
-  const result = await fetchProjectTasksUseCase.execute({ projectId })
+  const result = await fetchProjectTasksUseCase.execute({ projectId, archived })
 
   if (result.isLeft()) {
     throw result.value

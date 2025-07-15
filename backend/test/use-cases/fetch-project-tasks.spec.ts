@@ -24,7 +24,10 @@ describe('Fetch Project Tasks', () => {
       makeTask({ projectId: new UniqueEntityId('project-2') }),
     )
 
-    const result = await sut.execute({ projectId: 'project-1' })
+    const result = await sut.execute({
+      projectId: 'project-1',
+      archived: false,
+    })
 
     expect(result.value?.tasks).toHaveLength(2)
   })
@@ -48,8 +51,38 @@ describe('Fetch Project Tasks', () => {
       }),
     )
 
-    const result = await sut.execute({ projectId: 'project-1' })
+    const result = await sut.execute({
+      projectId: 'project-1',
+      archived: false,
+    })
 
     expect(result.value?.tasks).toHaveLength(2)
+  })
+
+  it('should only fetch archived tasks', async () => {
+    const sixteenDaysAgo = new Date()
+    sixteenDaysAgo.setDate(new Date().getDate() - 16)
+    sixteenDaysAgo.setHours(0, 0, 0)
+
+    await tasksRepository.create(
+      makeTask({ projectId: new UniqueEntityId('project-1') }),
+    )
+    await tasksRepository.create(
+      makeTask({ projectId: new UniqueEntityId('project-1') }),
+    )
+    await tasksRepository.create(
+      makeTask({
+        projectId: new UniqueEntityId('project-1'),
+        status: Status.DONE,
+        updatedAt: sixteenDaysAgo,
+      }),
+    )
+
+    const result = await sut.execute({
+      projectId: 'project-1',
+      archived: true,
+    })
+
+    expect(result.value?.tasks).toHaveLength(1)
   })
 })
