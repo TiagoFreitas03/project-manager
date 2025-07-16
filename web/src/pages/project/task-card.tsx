@@ -17,7 +17,10 @@ export function TaskCard({ data }: TaskCardProps) {
         <h2>{data.name}</h2>
       </div>
 
-      <DateInterval from={data.createdAt} to={data.updatedAt} />
+      <DateInterval
+        from={new Date(data.createdAt)}
+        to={new Date(data.updatedAt)}
+      />
 
       <div className="flex items-center gap-1 text-xs">
         <span>Prioridade: </span>
