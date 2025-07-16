@@ -1,4 +1,4 @@
-import { KanbanSquare } from 'lucide-react'
+import { Archive, KanbanSquare } from 'lucide-react'
 import { TasksColumn } from './tasks-column'
 import { CreateTaskDialog } from './create-task-dialog'
 import { ProjectDetailsDialog } from './project-details-dialog'
@@ -7,10 +7,11 @@ import { DeleteProjectDialog } from './delete-project-dialog'
 import type { Project as ProjectType } from '@/interfaces/project'
 import type { Task } from '@/interfaces/task'
 import { Header } from '@/components/header'
-import { useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { getProjectBySlug } from '@/api/get-project-by-slug'
 import { fetchProjectTasks } from '@/api/fetch-project-tasks'
+import { Button } from '@/components/ui/button'
 
 interface ProjectTasks {
   toDoTasks: Task[]
@@ -60,6 +61,12 @@ export function Project() {
           <EditProjectDialog data={project} />
 
           <DeleteProjectDialog id={project.id} />
+
+          <Link to={`/archive/${project.id}`} title="Tarefas arquivadas">
+            <Button>
+              <Archive />
+            </Button>
+          </Link>
         </div>
       </Header>
 
