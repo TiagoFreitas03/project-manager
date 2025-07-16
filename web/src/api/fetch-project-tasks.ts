@@ -7,9 +7,14 @@ interface FetchProjectTasksResponse {
   doneTasks: Task[]
 }
 
-export async function fetchProjectTasks(projectId: string) {
+export async function fetchProjectTasks(projectId: string, archived = false) {
   const response = await api.get<FetchProjectTasksResponse>(
     `/projects/${projectId}/tasks`,
+    {
+      params: {
+        archived,
+      },
+    },
   )
 
   return response.data
