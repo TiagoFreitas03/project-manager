@@ -8,7 +8,10 @@ export class PrismaTasksRepository implements TasksRepository {
   async create(task: Task) {
     const data = TaskMapper.toPrisma(task)
 
-    await prisma.task.create({ data })
+    await Promise.all([
+      prisma.task.create({ data }),
+      this.updateProject(data.projectId),
+    ])
   }
 
   async findManyByProjectId(projectId: string, archived: boolean) {
@@ -58,19 +61,28 @@ export class PrismaTasksRepository implements TasksRepository {
   async save(task: Task) {
     const data = TaskMapper.toPrisma(task)
 
-    await prisma.task.update({
-      data,
-      where: {
-        id: data.id,
-      },
-    })
+    await Promise.all([
+      prisma.task.update({
+        data,
+        where: { id: data.id },
+      }),
+      this.updateProject(data.projectId),
+    ])
   }
 
   async delete(task: Task) {
-    await prisma.task.delete({
-      where: {
-        id: task.id.toString(),
-      },
+    await Promise.all([
+      prisma.task.delete({
+        where: { id: task.id.toString() },
+      }),
+      this.updateProject(task.projectId.toString()),
+    ])
+  }
+
+  async updateProject(projectId: string) {
+    await prisma.project.update({
+      data: { updatedAt: new Date() },
+      where: { id: projectId },
     })
   }
 }
