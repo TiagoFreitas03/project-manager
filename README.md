@@ -3,7 +3,7 @@
 Um sistema simples e eficiente para gerenciar projetos e suas tarefas. Este repositório contém o código-fonte de um gerenciador de projetos desenvolvido com foco em produtividade, organização e facilidade de uso.
 
 <h1 align="center">
-  <img alt="Preview" title="Preview" src="github/preview.png" />
+  <img alt="Preview" title="Preview" src=".github/preview.png" />
 </h1>
 
 ## 🚀 Funcionalidades
