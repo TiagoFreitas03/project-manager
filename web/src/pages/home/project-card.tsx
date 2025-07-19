@@ -1,5 +1,4 @@
 import { Link } from 'react-router'
-
 import { StatusBadge } from '@/components/status-badge'
 import { Progress } from '@/components/ui/progress'
 import type { ProjectSummary } from '@/interfaces/project-summary'
