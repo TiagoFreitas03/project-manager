@@ -1,5 +1,4 @@
 import { Trash } from 'lucide-react'
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { deleteTask } from '@/api/delete-task'
 import { useNavigate } from 'react-router'
 import { toast } from 'sonner'
+import { useMutation } from '@tanstack/react-query'
 
 interface DeleteTaskDialogProps {
   id: string
@@ -23,9 +23,14 @@ interface DeleteTaskDialogProps {
 export function DeleteTaskDialog({ id }: DeleteTaskDialogProps) {
   const navigate = useNavigate()
 
+  const { mutateAsync: deleteTaskFn } = useMutation({
+    mutationFn: deleteTask,
+  })
+
   async function handleConfirmDelete() {
     try {
-      await deleteTask(id)
+      await deleteTaskFn(id)
+      toast.success('Tarefa excluída!')
       navigate(-1)
     } catch (err) {
       toast.error('Ocorreu algum erro ao excluir a tarefa!')

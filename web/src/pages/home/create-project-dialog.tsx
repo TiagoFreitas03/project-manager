@@ -17,21 +17,31 @@ import { Label } from '@/components/ui/label'
 import { FormField } from '@/components/form-field'
 import { createProject } from '@/api/create-project'
 import { toast } from 'sonner'
+import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router'
 
 export function CreateProjectDialog() {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [repositoryUrl, setRepositoryUrl] = useState('')
 
+  const { mutateAsync: createProjectFn } = useMutation({
+    mutationFn: createProject,
+  })
+
+  const navigate = useNavigate()
+
   async function handleCreateProject(event: FormEvent) {
     event.preventDefault()
 
     try {
-      await createProject({ name, description, repositoryUrl })
-      toast.success('Projeto cadastrado')
-      setName('')
-      setDescription('')
-      setRepositoryUrl('')
+      const { project } = await createProjectFn({
+        name,
+        description,
+        repositoryUrl,
+      })
+      toast.success('Projeto cadastrado!')
+      navigate(`/project/${project.slug}`)
     } catch (err) {
       toast.error('Ocorreu um erro. Verifique as informações e tente de novo!')
       console.log(err)

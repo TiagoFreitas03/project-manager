@@ -1,6 +1,5 @@
 import { Edit } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -20,6 +19,7 @@ import { FormField } from '@/components/form-field'
 import { Label } from '@/components/ui/label'
 import { editTask } from '@/api/edit-task'
 import { toast } from 'sonner'
+import { useMutation } from '@tanstack/react-query'
 
 interface EditTaskDialogProps {
   data: TaskDetails
@@ -30,11 +30,15 @@ export function EditTaskDialog({ data }: EditTaskDialogProps) {
   const [description, setDescription] = useState(data.description)
   const [priority, setPriority] = useState(data.priority)
 
+  const { mutateAsync: editTaskFn } = useMutation({
+    mutationFn: editTask,
+  })
+
   async function handleEditTask(event: FormEvent) {
     event.preventDefault()
 
     try {
-      await editTask({ id: data.id, name, description, priority })
+      await editTaskFn({ id: data.id, name, description, priority })
       window.location.reload()
     } catch (err) {
       toast.error('Ocorreu algum erro ao editar a tarefa!')

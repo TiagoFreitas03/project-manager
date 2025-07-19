@@ -1,6 +1,5 @@
 import { Edit } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -19,6 +18,7 @@ import { editProject } from '@/api/edit-project'
 import { toast } from 'sonner'
 import { FormField } from '@/components/form-field'
 import { Label } from '@/components/ui/label'
+import { useMutation } from '@tanstack/react-query'
 
 interface EditProjectDialogProps {
   data: Project
@@ -28,12 +28,16 @@ export function EditProjectDialog({ data }: EditProjectDialogProps) {
   const [description, setDescription] = useState(data.description)
   const [repositoryUrl, setRepositoryUrl] = useState(data.repositoryUrl)
 
+  const { mutateAsync: editProjectFn } = useMutation({
+    mutationFn: editProject,
+  })
+
   async function handleEditProject(event: FormEvent) {
     event.preventDefault()
 
     try {
-      await editProject({ id: data.id, description, repositoryUrl })
-      toast.success('Projeto atualizado com sucesso!')
+      await editProjectFn({ id: data.id, description, repositoryUrl })
+      toast.success('Projeto atualizado!')
     } catch (err) {
       toast.error('Ocorreu um erro. Verifique as informações e tente de novo!')
       console.log(err)

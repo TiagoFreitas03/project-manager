@@ -1,46 +1,22 @@
 import { Archive, KanbanSquare } from 'lucide-react'
-import { TasksColumn } from './tasks-column'
 import { CreateTaskDialog } from './create-task-dialog'
 import { ProjectDetailsDialog } from './project-details-dialog'
 import { EditProjectDialog } from './edit-project-dialog'
 import { DeleteProjectDialog } from './delete-project-dialog'
-import type { Project as ProjectType } from '@/interfaces/project'
-import type { Task } from '@/interfaces/task'
 import { Header } from '@/components/header'
 import { Link, useParams } from 'react-router'
-import { useEffect, useState } from 'react'
 import { getProjectBySlug } from '@/api/get-project-by-slug'
-import { fetchProjectTasks } from '@/api/fetch-project-tasks'
 import { Button } from '@/components/ui/button'
-
-interface ProjectTasks {
-  toDoTasks: Task[]
-  doingTasks: Task[]
-  doneTasks: Task[]
-}
+import { useQuery } from '@tanstack/react-query'
+import { TasksBoard } from './tasks-board'
 
 export function Project() {
-  const { slug } = useParams<{ slug: string }>()
+  const { slug = '' } = useParams<{ slug: string }>()
 
-  const [project, setProject] = useState<ProjectType>()
-  const [{ toDoTasks, doingTasks, doneTasks }, setTasks] =
-    useState<ProjectTasks>({
-      toDoTasks: [],
-      doingTasks: [],
-      doneTasks: [],
-    })
-
-  const tasksAmount = toDoTasks.length + doingTasks.length + doneTasks.length
-
-  useEffect(() => {
-    if (slug) {
-      getProjectBySlug(slug).then((data) => {
-        setProject(data)
-
-        fetchProjectTasks(data.id).then((data) => setTasks(data))
-      })
-    }
-  }, [slug])
+  const { data: project } = useQuery({
+    queryKey: ['project', slug],
+    queryFn: () => getProjectBySlug(slug),
+  })
 
   if (!project) {
     return <h1>Projeto não encontrado.</h1>
@@ -70,19 +46,7 @@ export function Project() {
         </div>
       </Header>
 
-      {tasksAmount === 0 ? (
-        <div className="flex justify-center items-center min-h-[90%] border rounded mt-4">
-          <span>Nenhuma tarefa encontrada.</span>
-        </div>
-      ) : (
-        <div className="grid grid-cols-3 mt-2 gap-2">
-          <TasksColumn status={'TO_DO'} tasks={toDoTasks} />
-
-          <TasksColumn status={'DOING'} tasks={doingTasks} />
-
-          <TasksColumn status={'DONE'} tasks={doneTasks} />
-        </div>
-      )}
+      <TasksBoard projectId={project.id}></TasksBoard>
     </>
   )
 }

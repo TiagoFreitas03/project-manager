@@ -2,30 +2,33 @@ import { fetchProjectTasks } from '@/api/fetch-project-tasks'
 import { Header } from '@/components/header'
 import { PriorityBadge } from '@/components/priority-badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import type { Task } from '@/interfaces/task'
+import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { Archive as ArchiveIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 
 export function Archive() {
-  const { projectId } = useParams<{ projectId: string }>()
+  const { projectId = '' } = useParams<{ projectId: string }>()
 
-  const [archivedTasks, setArchivedTasks] = useState<Task[]>([])
+  const { data: tasks } = useQuery({
+    queryKey: ['archived-tasks', projectId],
+    queryFn: () => fetchProjectTasks(projectId, true),
+  })
 
-  useEffect(() => {
-    if (projectId) {
-      fetchProjectTasks(projectId, true).then((data) => {
-        setArchivedTasks(data.doneTasks)
-      })
-    }
-  }, [projectId])
+  if (!tasks) {
+    return <></>
+  }
+
+  const archivedTasks = tasks.doneTasks
+
   return (
     <>
       <Header>
-        <span className="flex items-center gap-3 font-bold text-lg uppercase tracking-widest">
+        <span className="flex items-center gap-3 font-bold text-lg uppercase tracking-widest py-1.5">
           <ArchiveIcon color="white" /> Arquivo
         </span>
+
+        <span>{archivedTasks.length} tarefas arquivadas</span>
       </Header>
 
       {archivedTasks.length === 0 ? (

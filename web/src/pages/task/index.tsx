@@ -1,5 +1,4 @@
 import { Header } from '@/components/header'
-import type { TaskDetails } from '@/interfaces/task-details'
 import { FileText } from 'lucide-react'
 import { DeleteTaskDialog } from './delete-task-dialog'
 import { EditTaskDialog } from './edit-task-dialog'
@@ -9,37 +8,33 @@ import { PriorityBadge } from '@/components/priority-badge'
 import { StatusBadge } from '@/components/status-badge'
 import { Button } from '@/components/ui/button'
 import { useParams } from 'react-router'
-import { useEffect, useState } from 'react'
 import { getTaskById } from '@/api/get-task-by-id'
 import { updateTaskStatus } from '@/api/update-task-status'
 import { toast } from 'sonner'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 const statuses = ['TO_DO', 'DOING', 'DONE']
 
 export function Task() {
-  const { id } = useParams<{ id: string }>()
+  const { id = '' } = useParams<{ id: string }>()
 
-  const [task, setTask] = useState<TaskDetails>()
+  const { data: task } = useQuery({
+    queryKey: ['task', id],
+    queryFn: () => getTaskById(id),
+  })
 
-  useEffect(() => {
-    if (id) {
-      getTaskById(id).then(setTask)
-    }
-  }, [id])
+  const { mutateAsync: updateTaskStatusFn } = useMutation({
+    mutationFn: updateTaskStatus,
+  })
 
   if (!task || !id) {
     return <h1>Tarefa não encontrada.</h1>
   }
 
   async function handleUpdateTaskStatus(status: string) {
-    if (!id || !task) {
-      return
-    }
-
     try {
-      await updateTaskStatus({ id, status })
-      const taskWithNewStatus = { ...task, status }
-      setTask(taskWithNewStatus)
+      await updateTaskStatusFn({ id, status })
+      window.location.reload()
     } catch (err) {
       toast.error('Ocorreu algum erro ao atualizar o status!')
       console.log(err)

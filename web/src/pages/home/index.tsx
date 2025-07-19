@@ -1,31 +1,20 @@
-import { useEffect, useState } from 'react'
 import { FiltersForm } from './filters-form'
 import { ProjectCard } from './project-card'
 import { Pagination } from '@/components/pagination'
-import type { ProjectSummary } from '@/interfaces/project-summary'
 import { Layers } from 'lucide-react'
 import { CreateProjectDialog } from './create-project-dialog'
 import { Header } from '@/components/header'
 import { searchProjects } from '@/api/search-projects'
 import { useSearchParams } from 'react-router'
 import { z } from 'zod'
+import { useQuery } from '@tanstack/react-query'
 
 export function Home() {
-  const [projects, setProjects] = useState<ProjectSummary[]>([])
-  const [totalPages, setTotalPages] = useState(1)
-
   const [searchParams, setSearchParams] = useSearchParams()
 
   const name = searchParams.get('name') ?? undefined
   const orderBy = searchParams.get('order') ?? 'updatedAt'
   const page = z.coerce.number().parse(searchParams.get('page') ?? '1')
-
-  useEffect(() => {
-    searchProjects({ name, orderBy, page }).then((data) => {
-      setProjects(data.projects)
-      setTotalPages(data.pages)
-    })
-  }, [name, orderBy, page])
 
   function handlePaginate(page: number) {
     setSearchParams((state) => {
@@ -34,6 +23,17 @@ export function Home() {
       return state
     })
   }
+
+  const { data: result } = useQuery({
+    queryKey: ['projects', name, page, orderBy],
+    queryFn: () => searchProjects({ name, page, orderBy }),
+  })
+
+  if (!result) {
+    return <></>
+  }
+
+  const { projects, pages } = result
 
   return (
     <>
@@ -61,7 +61,7 @@ export function Home() {
 
           <div className="flex justify-between items-center">
             <Pagination
-              pages={totalPages}
+              pages={pages}
               currentPage={page}
               onPageChange={handlePaginate}
             />

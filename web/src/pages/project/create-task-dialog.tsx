@@ -1,6 +1,5 @@
 import { Plus } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -19,6 +18,8 @@ import { FormField } from '@/components/form-field'
 import { Label } from '@/components/ui/label'
 import { createTask } from '@/api/create-task'
 import { toast } from 'sonner'
+import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router'
 
 interface CreateTaskDialogProps {
   projectId: string
@@ -29,15 +30,24 @@ export function CreateTaskDialog({ projectId }: CreateTaskDialogProps) {
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState(2)
 
+  const { mutateAsync: createTaskFn } = useMutation({
+    mutationFn: createTask,
+  })
+
+  const navigate = useNavigate()
+
   async function handleCreateTask(event: FormEvent) {
     event.preventDefault()
 
     try {
-      await createTask({ name, description, priority, projectId })
+      const { task } = await createTaskFn({
+        name,
+        description,
+        priority,
+        projectId,
+      })
       toast.success('Tarefa cadastrada')
-      setName('')
-      setDescription('')
-      setPriority(2)
+      navigate(`/task/${task.id}`)
     } catch (err) {
       toast.error('Ocorreu um erro. Verifique as informações e tente de novo!')
       console.log(err)

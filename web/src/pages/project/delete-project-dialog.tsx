@@ -1,5 +1,4 @@
 import { Trash } from 'lucide-react'
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { deleteProject } from '@/api/delete-project'
 import { useNavigate } from 'react-router'
 import { toast } from 'sonner'
+import { useMutation } from '@tanstack/react-query'
 
 interface DeleteProjectDialogProps {
   id: string
@@ -23,9 +23,14 @@ interface DeleteProjectDialogProps {
 export function DeleteProjectDialog({ id }: DeleteProjectDialogProps) {
   const navigate = useNavigate()
 
+  const { mutateAsync: deleteProjectFn } = useMutation({
+    mutationFn: deleteProject,
+  })
+
   async function handleConfirmDelete() {
     try {
-      await deleteProject(id)
+      await deleteProjectFn(id)
+      toast.success('Projeto excluído!')
       navigate('/')
     } catch (err) {
       toast.error('Ocorreu algum erro ao excluir o projeto!')
